@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -23,14 +24,29 @@ public class Product {
     private BigDecimal price;
     private  String category;
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "release_date")
     private Date releaseDate;
+
+    @Column(name = "product_available")
     private boolean productAvailable;
+
+    @Column(name = "stock_quantity")
     private int stockQuantity;
 
+    @Column(name = "image_name")
     private String imageName;
+
+    @Column(name = "image_type")
     private String imageType;
+
     @Lob
+    @Column(name = "image_data")
+    @JsonIgnore
     private byte[] imageDate;
+
+    @Transient
+    private String currency = "MAD";
 
     public int getId() {
         return id;
@@ -112,7 +128,7 @@ public class Product {
         this.imageName = imageName;
     }
 
-    public String getImageType(String contentType) {
+    public String getImageType() {
         return imageType;
     }
 
@@ -126,5 +142,13 @@ public class Product {
 
     public void setImageDate(byte[] imageDate) {
         this.imageDate = imageDate;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 }

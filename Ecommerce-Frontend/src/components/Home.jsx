@@ -1,11 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import AppContext from "../Context/Context";
 import unplugged from "../assets/unplugged.png"
+import API from "../axios";
+import { formatCurrency } from "../utils/formatCurrency";
+import AuthContext from "../Context/AuthContext";
 
 const Home = ({ selectedCategory }) => {
   const { data, isError, addToCart, refreshData } = useContext(AppContext);
+  const { isUser } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [isDataFetched, setIsDataFetched] = useState(false);
 
@@ -22,10 +26,9 @@ const Home = ({ selectedCategory }) => {
         const updatedProducts = await Promise.all(
           data.map(async (product) => {
             try {
-              const response = await axios.get(
-                `http://localhost:8080/api/product/${product.id}/image`,
-                { responseType: "blob" }
-              );
+              const response = await API.get(`/product/${product.id}/image`, {
+                responseType: "blob",
+              });
               const imageUrl = URL.createObjectURL(response.data);
               return { ...product, imageUrl };
             } catch (error) {
@@ -83,12 +86,6 @@ const Home = ({ selectedCategory }) => {
           filteredProducts.map((product) => {
             const { id, brand, name, price, productAvailable, imageUrl } =
               product;
-            const cardStyle = {
-              width: "18rem",
-              height: "12rem",
-              boxShadow: "rgba(0, 0, 0, 0.24) 0px 2px 3px",
-              backgroundColor: productAvailable ? "#fff" : "#ccc",
-            };
             return (
               <div
                 className="card mb-3"
@@ -150,10 +147,9 @@ const Home = ({ selectedCategory }) => {
                     <div className="home-cart-price">
                       <h5
                         className="card-text"
-                        style={{ fontWeight: "600", fontSize: "1.1rem",marginBottom:'5px' }}
+                        style={{ fontWeight: "600", fontSize: "1.1rem", marginBottom: "5px" }}
                       >
-                        <i class="bi bi-currency-rupee"></i>
-                        {price}
+                        {formatCurrency(price)}
                       </h5>
                     </div>
                     <button
@@ -161,11 +157,19 @@ const Home = ({ selectedCategory }) => {
                       style={{margin:'10px 25px 0px '  }}
                       onClick={(e) => {
                         e.preventDefault();
+                        if (!isUser) {
+                          navigate("/login");
+                          return;
+                        }
                         addToCart(product);
                       }}
-                      disabled={!productAvailable}
+                      disabled={!productAvailable || !isUser}
                     >
-                      {productAvailable ? "Add to Cart" : "Out of Stock"}
+                      {!isUser
+                        ? "Login to Shop"
+                        : productAvailable
+                        ? "Add to Cart"
+                        : "Out of Stock"}
                     </button> 
                   </div>
                 </Link>

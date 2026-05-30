@@ -1,28 +1,35 @@
-import React, { useEffect, useState } from "react";
-import Home from "./Home"
-import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import API from "../axios";
+import AppContext from "../Context/Context";
+import AuthContext from "../Context/AuthContext";
 // import { json } from "react-router-dom";
 // import { BiSunFill, BiMoon } from "react-icons/bi";
 
-const Navbar = ({ onSelectCategory, onSearch }) => {
+const Navbar = ({ onSelectCategory }) => {
   const getInitialTheme = () => {
     const storedTheme = localStorage.getItem("theme");
     return storedTheme ? storedTheme : "light-theme";
   };
+  const { cart } = useContext(AppContext);
+  const { user, isAdmin, isUser, isAuthenticated, logout } = useContext(AuthContext);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [theme, setTheme] = useState(getInitialTheme());
   const [input, setInput] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [noResults, setNoResults] = useState(false);
-  const [searchFocused, setSearchFocused] = useState(false);
   const [showSearchResults,setShowSearchResults] = useState(false)
+  const navigate = useNavigate();
+
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (!isAdmin) {
+      fetchData();
+    }
+  }, [isAdmin]);
 
   const fetchData = async (value) => {
     try {
-      const response = await axios.get("http://localhost:8080/api/products");
+      const response = await API.get("/products");
       setSearchResults(response.data);
       console.log(response.data);
     } catch (error) {
@@ -35,9 +42,7 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
     if (value.length >= 1) {
       setShowSearchResults(true)
     try {
-      const response = await axios.get(
-        `http://localhost:8080/api/products/search?keyword=${value}`
-      );
+      const response = await API.get(`/products/search?keyword=${value}`);
       setSearchResults(response.data);
       setNoResults(response.data.length === 0);
       console.log(response.data);
@@ -94,21 +99,19 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
     document.body.className = theme;
   }, [theme]);
 
-  const categories = [
-    "Laptop",
-    "Headphone",
-    "Mobile",
-    "Electronics",
-    "Toys",
-    "Fashion",
-  ];
+  const categories = ["Laptop", "Headphone", "Mobile", "Electronics", "Toys", "Fashion"];
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login", { replace: true });
+  };
   return (
     <>
       <header>
         <nav className="navbar navbar-expand-lg fixed-top">
           <div className="container-fluid">
-            <a className="navbar-brand" href="https://www.linkedin.com/in/harish-kumar-gatti-663066249/">
-              HiTeckKart
+            <a className="navbar-brand" href="/">
+              DIGITECH
             </a>
             <button
               className="navbar-toggler"
@@ -126,42 +129,53 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
               id="navbarSupportedContent"
             >
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                <li className="nav-item">
-                  <a className="nav-link active" aria-current="page" href="/">
-                    Home
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="/add_product">
-                    Add Product
-                  </a>
-                </li>
+                {!isAdmin && (
+                  <li className="nav-item">
+                    <a className="nav-link active" aria-current="page" href="/">
+                      Home
+                    </a>
+                  </li>
+                )}
+                {isAdmin && (
+                  <li className="nav-item">
+                    <a className="nav-link active" aria-current="page" href="/admin">
+                      Dashboard
+                    </a>
+                  </li>
+                )}
+                {isUser && (
+                  <li className="nav-item">
+                    <a className="nav-link" href="/orders">
+                      Order History
+                    </a>
+                  </li>
+                )}
+                {!isAdmin && (
+                  <li className="nav-item dropdown">
+                    <a
+                      className="nav-link dropdown-toggle"
+                      href="/"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Categories
+                    </a>
 
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="/"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Categories
-                  </a>
-
-                  <ul className="dropdown-menu">
-                    {categories.map((category) => (
-                      <li key={category}>
-                        <button
-                          className="dropdown-item"
-                          onClick={() => handleCategorySelect(category)}
-                        >
-                          {category}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-
+                    <ul className="dropdown-menu">
+                      {categories.map((category) => (
+                        <li key={category}>
+                          <button
+                            className="dropdown-item"
+                            onClick={() => handleCategorySelect(category)}
+                          >
+                            {category}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                )}
                 <li className="nav-item"></li>
               </ul>
               <button className="theme-btn" onClick={() => toggleTheme()}>
@@ -172,51 +186,69 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
                 )}
               </button>
               <div className="d-flex align-items-center cart">
-                <a href="/cart" className="nav-link text-dark">
-                  <i
-                    className="bi bi-cart me-2"
-                    style={{ display: "flex", alignItems: "center" }}
-                  >
-                    Cart
-                  </i>
-                </a>
-                {/* <form className="d-flex" role="search" onSubmit={handleSearch} id="searchForm"> */}
-                <input
-                  className="form-control me-2"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                  value={input}
-                  onChange={(e) => handleChange(e.target.value)}
-                  onFocus={() => setSearchFocused(true)} // Set searchFocused to true when search bar is focused
-                  onBlur={() => setSearchFocused(false)} // Set searchFocused to false when search bar loses focus
-                />
-                {showSearchResults && (
-                  <ul className="list-group">
-                    {searchResults.length > 0 ? (  
-                        searchResults.map((result) => (
-                          <li key={result.id} className="list-group-item">
-                            <a href={`/product/${result.id}`} className="search-result-link">
-                            <span>{result.name}</span>
-                            </a>
-                          </li>
-                        ))
-                    ) : (
-                      noResults && (
-                        <p className="no-results-message">
-                          No Prouduct with such Name
-                        </p>
-                      )
-                    )}
-                  </ul>
+                {!isAdmin && isUser && (
+                  <>
+                    <a href="/cart" className="nav-link text-dark">
+                      <i
+                        className="bi bi-cart me-2"
+                        style={{ display: "flex", alignItems: "center" }}
+                      >
+                        Cart
+                      </i>
+                    </a>
+                    <span className="cart-count">{cart.itemCount || 0}</span>
+                  </>
                 )}
-                {/* <button
-                  className="btn btn-outline-success"
-                  onClick={handleSearch}
-                >
-                  Search Products
-                </button> */}
-                {/* </form> */}
+                {!isAdmin && (
+                  <div className="nav-search">
+                    <input
+                      className="form-control me-2"
+                      type="search"
+                      placeholder="Search"
+                      aria-label="Search"
+                      value={input}
+                      onChange={(e) => handleChange(e.target.value)}
+                    />
+                    {showSearchResults && (
+                      <ul className="list-group">
+                        {searchResults.length > 0 ? (
+                          searchResults.map((result) => (
+                            <li key={result.id} className="list-group-item">
+                              <a href={`/product/${result.id}`} className="search-result-link">
+                                <span>{result.name}</span>
+                              </a>
+                            </li>
+                          ))
+                        ) : (
+                          noResults && (
+                            <p className="no-results-message">
+                              No product with such name
+                            </p>
+                          )
+                        )}
+                      </ul>
+                    )}
+                  </div>
+                )}
+                <div className="auth-actions">
+                  {isAuthenticated ? (
+                    <>
+                      <span className="user-chip">
+                        {user?.fullName || user?.email}
+                      </span>
+                      <button className="btn btn-outline-dark" onClick={handleLogout}>
+                        Logout
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => navigate("/login")}
+                    >
+                      Login
+                    </button>
+                  )}
+                </div>
                 <div />
               </div>
             </div>

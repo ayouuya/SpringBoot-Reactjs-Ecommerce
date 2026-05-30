@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import API from "../axios";
 
-const UpdateProduct = () => {
+const UpdateProduct = ({ embedded = false }) => {
   const { id } = useParams();
   const [product, setProduct] = useState({});
   const [image, setImage] = useState();
@@ -21,16 +21,13 @@ const UpdateProduct = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8080/api/product/${id}`
-        );
+        const response = await API.get(`/product/${id}`);
 
         setProduct(response.data);
       
-        const responseImage = await axios.get(
-          `http://localhost:8080/api/product/${id}/image`,
-          { responseType: "blob" }
-        );
+        const responseImage = await API.get(`/product/${id}/image`, {
+          responseType: "blob",
+        });
        const imageFile = await converUrlToFile(responseImage.data,response.data.imageName)
         setImage(imageFile);     
         setUpdateProduct(response.data);
@@ -66,12 +63,11 @@ const UpdateProduct = () => {
   
 
   console.log("formData : ", updatedProduct)
-    axios
-      .put(`http://localhost:8080/api/product/${id}`, updatedProduct, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+    API.put(`/product/${id}`, updatedProduct, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
       .then((response) => {
         console.log("Product updated successfully:", updatedProduct);
         alert("Product updated successfully!");
@@ -97,9 +93,12 @@ const UpdateProduct = () => {
   };
   
 
+  const containerClass = embedded ? "admin-form-container" : "update-product-container";
+  const innerClass = embedded ? "admin-form-inner" : "center-container";
+
   return (
-    <div className="update-product-container" >
-      <div className="center-container"style={{marginTop:"7rem"}}>
+    <div className={containerClass}>
+      <div className={innerClass} style={embedded ? {} : { marginTop: "7rem" }}>
         <h1>Update Product</h1>
         <form className="row g-3 pt-1" onSubmit={handleSubmit}>
           <div className="col-md-6">
@@ -145,7 +144,7 @@ const UpdateProduct = () => {
           </div>
           <div className="col-5">
             <label className="form-label">
-              <h6>Price</h6>
+              <h6>Price (MAD)</h6>
             </label>
             <input
               type="number"
@@ -169,12 +168,12 @@ const UpdateProduct = () => {
               id="category"
             >
               <option value="">Select category</option>
-              <option value="laptop">Laptop</option>
-              <option value="headphone">Headphone</option>
-              <option value="mobile">Mobile</option>
-              <option value="electronics">Electronics</option>
-              <option value="toys">Toys</option>
-              <option value="fashion">Fashion</option>
+              <option value="Laptop">Laptop</option>
+              <option value="Headphone">Headphone</option>
+              <option value="Mobile">Mobile</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Toys">Toys</option>
+              <option value="Fashion">Fashion</option>
             </select>
           </div>
 

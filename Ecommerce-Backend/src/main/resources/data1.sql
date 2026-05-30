@@ -1,6 +1,7 @@
-INSERT INTO product (name, desc, brand, price, category, release_date, available, quantity) VALUES
-('Tata Nexon', 'A compact SUV with excellent safety features and performance.', 'Tata Motors', 750000.00, 'Cars', '2024-01-15', true, 50),
-('Maruti Suzuki Swift', 'A popular hatchback known for its fuel efficiency and reliability.', 'Maruti Suzuki', 550000.00, 'Cars', '2024-02-01', true, 100),
-('Hyundai Creta', 'A stylish SUV with advanced features and comfortable interior.', 'Hyundai', 950000.00, 'Cars', '2024-03-01', true, 75),
-('Mahindra Thar', 'A rugged off-road SUV with a powerful engine and modern amenities.', 'Mahindra', 1200000.00, 'Cars', '2024-04-01', true, 30),
-('Honda City', 'A premium sedan with a sleek design and advanced safety features', 'Honda',1100000.00, 'Cars', '2024-05-01', true, 60);
+INSERT INTO product (name, description, brand, price, category, release_date, product_available, stock_quantity) VALUES
+('DIGITECH NovaBook 14', 'Lightweight 14-inch laptop with 16GB RAM and 512GB SSD.', 'DIGITECH', 9499.00, 'Laptop', '2024-01-15', true, 25),
+('Atlas Pro 5G', '6.7-inch AMOLED display, 128GB storage, 50MP triple camera.', 'Atlas', 5799.00, 'Mobile', '2024-02-10', true, 40),
+('WaveBeat ANC', 'Wireless headphones with active noise cancellation and 30h battery.', 'WaveBeat', 1299.00, 'Headphone', '2024-02-24', true, 60),
+('Spark Home Hub', 'Smart home hub with voice control and multi-device support.', 'Spark', 899.00, 'Electronics', '2024-03-05', true, 35),
+('PixelPlay Drone Mini', 'Compact drone with 4K camera and stabilized flight.', 'PixelPlay', 1599.00, 'Toys', '2024-03-20', true, 20),
+('UrbanFlex Backpack', 'Water-resistant backpack with laptop sleeve and USB port.', 'UrbanFlex', 499.00, 'Fashion', '2024-04-02', true, 75);

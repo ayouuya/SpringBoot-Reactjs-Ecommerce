@@ -1,13 +1,13 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useContext, useEffect } from "react";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AppContext from "../Context/Context";
-import axios from "../axios";
-import UpdateProduct from "./UpdateProduct";
+import API from "../axios";
+import { formatCurrency } from "../utils/formatCurrency";
+import AuthContext from "../Context/AuthContext";
 const Product = () => {
   const { id } = useParams();
-  const { data, addToCart, removeFromCart, cart, refreshData } =
-    useContext(AppContext);
+  const { addToCart, removeFromCart, refreshData } = useContext(AppContext);
+  const { isAdmin, isUser } = useContext(AuthContext);
   const [product, setProduct] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const navigate = useNavigate();
@@ -15,9 +15,7 @@ const Product = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8080/api/product/${id}`
-        );
+        const response = await API.get(`/product/${id}`);
         setProduct(response.data);
         if (response.data.imageName) {
           fetchImage();
@@ -28,10 +26,9 @@ const Product = () => {
     };
 
     const fetchImage = async () => {
-      const response = await axios.get(
-        `http://localhost:8080/api/product/${id}/image`,
-        { responseType: "blob" }
-      );
+      const response = await API.get(`/product/${id}/image`, {
+        responseType: "blob",
+      });
       setImageUrl(URL.createObjectURL(response.data));
     };
 
@@ -40,7 +37,7 @@ const Product = () => {
 
   const deleteProduct = async () => {
     try {
-      await axios.delete(`http://localhost:8080/api/product/${id}`);
+      await API.delete(`/product/${id}`);
       removeFromCart(id);
       console.log("Product deleted successfully");
       alert("Product deleted successfully");
@@ -52,10 +49,14 @@ const Product = () => {
   };
 
   const handleEditClick = () => {
-    navigate(`/product/update/${id}`);
+    navigate(`/admin/products/${id}`);
   };
 
   const handlAddToCart = () => {
+    if (!isUser) {
+      navigate("/login");
+      return;
+    }
     addToCart(product);
     alert("Product added to cart");
   };
@@ -100,18 +101,18 @@ const Product = () => {
 
           <div className="product-price">
             <span style={{ fontSize: "2rem", fontWeight: "bold" }}>
-              {"$" + product.price}
+              {formatCurrency(product.price)}
             </span>
             <button
               className={`cart-btn ${
                 !product.productAvailable ? "disabled-btn" : ""
               }`}
               onClick={handlAddToCart}
-              disabled={!product.productAvailable}
+              disabled={!product.productAvailable || !isUser}
               style={{
                 padding: "1rem 2rem",
                 fontSize: "1rem",
-                backgroundColor: "#007bff",
+                backgroundColor: "var(--accent)",
                 color: "white",
                 border: "none",
                 borderRadius: "5px",
@@ -119,7 +120,11 @@ const Product = () => {
                 marginBottom: "1rem",
               }}
             >
-              {product.productAvailable ? "Add to cart" : "Out of Stock"}
+              {!isUser
+                ? "Login to Shop"
+                : product.productAvailable
+                ? "Add to cart"
+                : "Out of Stock"}
             </button>
             <h6 style={{ marginBottom: "1rem" }}>
               Stock Available :{" "}
@@ -129,41 +134,42 @@ const Product = () => {
             </h6>
           
           </div>
-          <div className="update-button" style={{ display: "flex", gap: "1rem" }}>
-            <button
-              className="btn btn-primary"
-              type="button"
-              onClick={handleEditClick}
-              style={{
-                padding: "1rem 2rem",
-                fontSize: "1rem",
-                backgroundColor: "#007bff",
-                color: "white",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-              }}
-            >
-              Update
-            </button>
-            {/* <UpdateProduct product={product} onUpdate={handleUpdate} /> */}
-            <button
-              className="btn btn-primary"
-              type="button"
-              onClick={deleteProduct}
-              style={{
-                padding: "1rem 2rem",
-                fontSize: "1rem",
-                backgroundColor: "#dc3545",
-                color: "white",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-              }}
-            >
-              Delete
-            </button>
-          </div>
+          {isAdmin && (
+            <div className="update-button" style={{ display: "flex", gap: "1rem" }}>
+              <button
+                className="btn btn-primary"
+                type="button"
+                onClick={handleEditClick}
+                style={{
+                  padding: "1rem 2rem",
+                  fontSize: "1rem",
+                  backgroundColor: "var(--accent-2)",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                }}
+              >
+                Update
+              </button>
+              <button
+                className="btn btn-primary"
+                type="button"
+                onClick={deleteProduct}
+                style={{
+                  padding: "1rem 2rem",
+                  fontSize: "1rem",
+                  backgroundColor: "#e63946",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                }}
+              >
+                Delete
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </>

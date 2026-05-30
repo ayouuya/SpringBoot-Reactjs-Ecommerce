@@ -1,62 +1,95 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import Cart from "./components/Cart";
-import AddProduct from "./components/AddProduct";
 import Product from "./components/Product";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AppProvider } from "./Context/Context";
-import UpdateProduct from "./components/UpdateProduct";
+import Login from "./components/Login";
+import OrderHistory from "./components/OrderHistory";
+import ProtectedRoute from "./components/ProtectedRoute";
+import StoreRoute from "./components/StoreRoute";
+import AdminLayout from "./components/admin/AdminLayout";
+import AdminProducts from "./components/admin/AdminProducts";
+import AdminAddProduct from "./components/admin/AdminAddProduct";
+import AdminEditProduct from "./components/admin/AdminEditProduct";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import 'bootstrap/dist/css/bootstrap.min.css';
 
+
+const AppRoutes = ({ selectedCategory, onSelectCategory }) => {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith("/admin");
+
+  return (
+    <>
+      {!isAdminRoute && <Navbar onSelectCategory={onSelectCategory} />}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <StoreRoute>
+              <Home selectedCategory={selectedCategory} />
+            </StoreRoute>
+          }
+        />
+        <Route
+          path="/product/:id"
+          element={
+            <StoreRoute>
+              <Product />
+            </StoreRoute>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <ProtectedRoute requiredRole="USER">
+              <Cart />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/orders"
+          element={
+            <ProtectedRoute requiredRole="USER">
+              <OrderHistory />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/login" element={<Login />} />
+
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute requiredRole="ADMIN">
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<AdminProducts />} />
+          <Route path="products/new" element={<AdminAddProduct />} />
+          <Route path="products/:id" element={<AdminEditProduct />} />
+        </Route>
+      </Routes>
+    </>
+  );
+};
 
 function App() {
-  const [cart, setCart] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
-    console.log("Selected category:", category);
-  };
-  const addToCart = (product) => {
-    const existingProduct = cart.find((item) => item.id === product.id);
-    if (existingProduct) {
-      setCart(
-        cart.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        )
-      );
-    } else {
-      setCart([...cart, { ...product, quantity: 1 }]);
-    }
   };
 
   return (
-    <AppProvider>
-      <BrowserRouter>
-        <Navbar onSelectCategory={handleCategorySelect}
-         />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Home addToCart={addToCart} selectedCategory={selectedCategory}
-              />
-            }
-          />
-          <Route path="/add_product" element={<AddProduct />} />
-          <Route path="/product" element={<Product  />} />
-          <Route path="product/:id" element={<Product  />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/product/update/:id" element={<UpdateProduct />} />
-        </Routes>
-      </BrowserRouter>
-    </AppProvider>
+    <BrowserRouter>
+      <AppRoutes
+        selectedCategory={selectedCategory}
+        onSelectCategory={handleCategorySelect}
+      />
+    </BrowserRouter>
   );
 }
 

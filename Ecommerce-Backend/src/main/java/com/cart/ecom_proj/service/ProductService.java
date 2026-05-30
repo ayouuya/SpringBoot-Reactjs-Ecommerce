@@ -32,14 +32,36 @@ public class ProductService {
     }
 
     public Product updateProduct(int id, Product product, MultipartFile imageFile) throws IOException {
-        product.setImageDate(imageFile.getBytes());
-        product.setImageName(imageFile.getOriginalFilename());
-        product.getImageType(imageFile.getContentType());
+        Product existing = repo.findById(id).orElse(null);
+        if (existing == null) {
+            return null;
+        }
+
+        product.setId(id);
+        if (imageFile != null && !imageFile.isEmpty()) {
+            product.setImageDate(imageFile.getBytes());
+            product.setImageName(imageFile.getOriginalFilename());
+            product.setImageType(imageFile.getContentType());
+        } else {
+            product.setImageDate(existing.getImageDate());
+            product.setImageName(existing.getImageName());
+            product.setImageType(existing.getImageType());
+        }
         return repo.save(product);
     }
 
     public void deleteProduct(int id) {
         repo.deleteById(id);
+    }
+
+    public Product updateStock(int id, int stockQuantity) {
+        Product existing = repo.findById(id).orElse(null);
+        if (existing == null) {
+            return null;
+        }
+        existing.setStockQuantity(stockQuantity);
+        existing.setProductAvailable(stockQuantity > 0);
+        return repo.save(existing);
     }
 
     public List<Product> searchProducts(String keyword) {

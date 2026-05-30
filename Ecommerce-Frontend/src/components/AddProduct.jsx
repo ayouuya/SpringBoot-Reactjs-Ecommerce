@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
+import API from "../axios";
 
-const AddProduct = () => {
+const AddProduct = ({ embedded = false }) => {
   const [product, setProduct] = useState({
     name: "",
     brand: "",
@@ -33,12 +33,11 @@ const AddProduct = () => {
       new Blob([JSON.stringify(product)], { type: "application/json" })
     );
 
-    axios
-      .post("http://localhost:8080/api/product", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+    API.post("/product", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
       .then((response) => {
         console.log("Product added successfully:", response.data);
         alert("Product added successfully");
@@ -49,10 +48,13 @@ const AddProduct = () => {
       });
   };
 
+  const containerClass = embedded ? "admin-form-container" : "container";
+  const innerClass = embedded ? "admin-form-inner" : "center-container";
+
   return (
-    <div className="container">
-    <div className="center-container">
-      <form className="row g-3 pt-5" onSubmit={submitHandler}>
+    <div className={containerClass}>
+    <div className={innerClass}>
+      <form className="row g-3 pt-3" onSubmit={submitHandler}>
         <div className="col-md-6">
           <label className="form-label">
             <h6>Name</h6>
@@ -96,12 +98,12 @@ const AddProduct = () => {
         </div>
         <div className="col-5">
           <label className="form-label">
-            <h6>Price</h6>
+            <h6>Price (MAD)</h6>
           </label>
           <input
             type="number"
             className="form-control"
-            placeholder="Eg: $1000"
+            placeholder="Eg: 1999.00"
             onChange={handleInputChange}
             value={product.price}
             name="price"

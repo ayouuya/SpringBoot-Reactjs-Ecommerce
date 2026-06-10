@@ -1,6 +1,8 @@
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\config\DataSeeder.java
+C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\config\OpenRouterConfig.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\controller\AuthController.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\controller\CartController.java
+C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\controller\ChatController.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\controller\CheckoutController.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\controller\OrderController.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\controller\ProductController.java
@@ -10,9 +12,14 @@ C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\dto\CardPaymentDetails.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\dto\CartDto.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\dto\CartItemDto.java
+C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\dto\ChatRequestDto.java
+C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\dto\ChatResponseDto.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\dto\CheckoutRequest.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\dto\CheckoutResponse.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\dto\CustomerDto.java
+C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\dto\OpenRouterMessage.java
+C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\dto\OpenRouterRequest.java
+C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\dto\OpenRouterResponse.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\dto\OrderDto.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\dto\OrderItemDto.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\dto\PaymentRequest.java
@@ -24,6 +31,7 @@ C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\model\AppUser.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\model\Cart.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\model\CartItem.java
+C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\model\ChatMessage.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\model\Order.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\model\OrderItem.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\model\OrderStatus.java
@@ -33,12 +41,14 @@ C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\model\Product.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\model\UserRole.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\repo\CartRepo.java
+C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\repo\ChatMessageRepo.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\repo\OrderRepo.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\repo\ProductRepo.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\repo\UserRepo.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\service\AuthService.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\service\CardPaymentService.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\service\CartService.java
+C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\service\ChatService.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\service\CheckoutService.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\service\OrderService.java
 C:\Users\ayaet\SpringBoot-Reactjs-Ecommerce\Ecommerce-Backend\src\main\java\com\cart\ecom_proj\service\PaymentService.java

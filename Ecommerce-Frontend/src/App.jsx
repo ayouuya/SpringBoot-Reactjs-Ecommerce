@@ -13,6 +13,8 @@ import AdminProducts from "./components/admin/AdminProducts";
 import AdminAddProduct from "./components/admin/AdminAddProduct";
 import AdminEditProduct from "./components/admin/AdminEditProduct";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import ChatBot from "./components/ChatBot";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
@@ -72,7 +74,9 @@ const AppRoutes = ({ selectedCategory, onSelectCategory }) => {
           <Route path="products/:id" element={<AdminEditProduct />} />
         </Route>
       </Routes>
+      <ChatBot />
     </>
+
   );
 };
 

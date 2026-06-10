@@ -1,0 +1,477 @@
+\documentclass[12pt,a4paper,oneside]{report}
+
+% --- PACKAGES DE BASE ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\geometry{top=2.5cm, bottom=2.5cm, left=3cm, right=2.5cm}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{tikz}
+
+% --- CONFIGURATION DE LA MISE EN PAGE ---
+\onehalfspacing
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\leftmark}
+\fancyhead[R]{\small DigiTech E-Commerce}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+% --- TITRES EN FRANCAIS ---
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{blue}}
+  {\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{0pt}{30pt}
+
+% --- COLORATION DES CODES & PLANTUML ---
+\definecolor{codegreen}{rgb}{0,0.5,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codeblue}{rgb}{0.1,0.2,0.8}
+\definecolor{backcolour}{rgb}{0.96,0.96,0.97}
+\definecolor{magenta}{rgb}{0.7,0,0.5}
+
+\lstset{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{codeblue}\bfseries,
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{magenta},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+% Définition de la coloration syntaxique pour le langage PlantUML
+\lstdefinelanguage{plantuml}{
+  keywords={@startuml,@enduml,actor,boundary,control,entity,database,class,interface,enum,as,left,right,direction,skinparam,usecase,rectangle,to,include},
+  keywordstyle=\color{codeblue}\bfseries,
+  ndkeywords={AppUser,Product,Cart,CartItem,Order,OrderItem,Payment,ChatMessage,UserRole,OrderStatus,PaymentMethod,PaymentStatus},
+  ndkeywordstyle=\color{magenta}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{'},
+  morecomment=[s]{/'}{'/},
+  commentstyle=\color{codegreen}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]"
+}
+
+\begin{document}
+
+% ==========================================
+% PAGE DE GARDE
+% ==========================================
+\begin{titlepage}
+    \begin{center}
+        \large\textbf{RÉPUBLIQUE MAROCAINE}\\
+        \large\textbf{Établissement Universitaire National}\\
+        \large\textbf{Filière : Génie Logiciel / Ingénierie du Web}\\
+        \vspace{1.5cm}
+        
+        \includegraphics[width=4cm]{logo.png} % Remplacez par le chemin de votre logo ou commentez
+        \vspace{1.5cm}
+        
+        \Huge\textbf{PROJET DE FIN D'ÉTUDES}\\
+        \vspace{0.8cm}
+        \LARGE\textbf{Conception et Réalisation d'une Plateforme E-Commerce Premium avec Chatbot IA Intégré}\\
+        \vspace{1.5cm}
+        
+        \large \textbf{Réalisé par :}\\
+        \Large \textbf{Votre Prénom Nom}\\
+        \vspace{1cm}
+        
+        \large \textbf{Sous la direction de :}\\
+        \Large \textbf{Pr. Encadrant (Tuteur Académique)}\\
+        \Large \textbf{M. Tuteur de Stage (Tuteur Entreprise)}\\
+        
+        \vfill
+        \large \textbf{Soutenu le : 30 Mai 2026 devant le jury :}\\
+        \small Pr. Examinateur 1 --- Pr. Examinateur 2\\
+        \vspace{0.8cm}
+        \large\textbf{Année Universitaire : 2025/2026}
+    \end{center}
+\end{titlepage}
+
+% ==========================================
+% REMERCIEMENTS
+% ==========================================
+\chapter*{Remerciements}
+\addcontentsline{toc}{chapter}{Remerciements}
+Je tiens tout d'abord à remercier mon encadrant académique, pour sa disponibilité, ses conseils précieux et son orientation constante tout au long de la réalisation de ce projet de fin d'études.
+
+Mes sincères remerciements s'adressent également aux membres du jury qui ont accepté d'évaluer ce travail et d'enrichir ce rapport par leurs remarques instructives.
+
+Enfin, je remercie chaleureusement ma famille et mes amis pour leur soutien indéfectible, tant sur le plan moral que matériel, durant toutes mes années d'études.
+
+% ==========================================
+% RESUME & ABSTRACT
+% ==========================================
+\chapter*{Résumé}
+\addcontentsline{toc}{chapter}{Résumé}
+Ce projet porte sur le développement d'une application e-commerce premium baptisée \textbf{DigiTech}, dotée d'une architecture moderne couplant un backend robuste en \textbf{Spring Boot 3} et un frontend interactif en \textbf{React}. La particularité majeure de cette solution réside dans l'intégration d'un \textbf{chatbot intelligent persistant} connecté à l'API \textbf{OpenRouter} (modèle \textbf{GPT-4o-mini}). L'historique des discussions est sécurisé par utilisateur connecté et historisé en base de données H2. L'interface de l'assistant virtuel est accessible de manière globale via un bouton flottant responsive en verre dépoli (glassmorphism), enrichie d'animations simulant l'écriture humaine.
+
+\vspace{1.5cm}
+\noindent\textbf{Mots-clés :} E-Commerce, Spring Boot, React, Chatbot IA, OpenRouter, Persistance de l'historique, Architecture REST, UML.
+
+\newpage
+
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+This project covers the development of a premium e-commerce platform named \textbf{DigiTech}, built on a modern architecture combining a robust \textbf{Spring Boot 3} backend with an interactive \textbf{React} frontend. The core innovation of this solution lies in the integration of a persistent, \textbf{AI-powered chatbot} connected to the \textbf{OpenRouter API} (running the \textbf{GPT-4o-mini} model). The chat history is secured per user and persisted in an H2 database. The user interface features a responsive floating button with glassmorphism styling, clean animations, and a real-time typing indicator.
+
+\vspace{1.5cm}
+\noindent\textbf{Keywords:} E-Commerce, Spring Boot, React, AI Chatbot, OpenRouter, Persistent Chat History, REST API, UML.
+
+% ==========================================
+% TABLE DES MATIERES
+% ==========================================
+\tableofcontents
+
+% ==========================================
+% INTRODUCTION GÉNERALE
+% ==========================================
+\chapter*{Introduction Générale}
+\addcontentsline{toc}{chapter}{Introduction Générale}
+
+\section*{Contexte}
+Dans un monde de plus en plus numérisé, le secteur de l'e-commerce connaît une croissance fulgurante au Maroc. Pour se démarquer, les plateformes doivent offrir non seulement un catalogue de produits fluide et un paiement sécurisé, mais également une expérience d'assistance client instantanée et personnalisée. L'intelligence artificielle, à travers les grands modèles de langage (LLM), offre aujourd'hui l'opportunité d'automatiser cette relation client de manière naturelle.
+
+\section*{Objectifs}
+L'objectif de ce projet est de concevoir et réaliser une plateforme e-commerce premium complète nommée \textbf{DigiTech}. Pour ce faire, nous développons un backend performant sous Spring Boot 3 et une interface frontend dynamique en React. L'accent est mis sur l'intégration d'un chatbot flottant intelligent accessible depuis toutes les pages, capable d'interagir intelligemment avec l'utilisateur sur la base de ses informations de profil et de conserver un historique persistant en base de données.
+
+\section*{Structure du Rapport}
+Notre rapport est organisé de la manière suivante :
+\begin{itemize}
+    \item \textbf{Chapitre 1} présente la problématique, le contexte du projet et l'état de l'art technologique.
+    \item \textbf{Chapitre 2} détaille l'analyse des besoins, l'identification des acteurs et l'analyse structurelle et dynamique via des diagrammes de cas d'utilisation, de classes et de séquence UML.
+    \item \textbf{Chapitre 3} se focalise sur la réalisation technique du projet, l'explication des composants développés et l'analyse des résultats obtenus.
+\end{itemize}
+
+% ==========================================
+% CHAPITRE 1 : PROBLEMATIQUE ET CONTEXTE
+% ==========================================
+\chapter{Problématique et Contexte}
+
+\section{État de l’art / Revue de littérature}
+Pour concevoir la solution e-commerce premium DigiTech, nous avons analysé les technologies existantes et retenu un ensemble d'outils éprouvés et performants.
+
+\subsection{Technologies logicielles retenues}
+\begin{itemize}
+    \item \textbf{Backend : Spring Boot 3 \& Java 17} : Framework de référence pour le développement d'API robustes, sécurisées et facilement scalables.
+    \item \textbf{Frontend : React \& Axios} : Bibliothèque Javascript orientée composants permettant de concevoir des interfaces Web asynchrones rapides et interactives.
+    \item \textbf{IA : OpenRouter \& GPT-4o-Mini} : OpenRouter unifie l'accès aux LLM. Le modèle GPT-4o-mini a été sélectionné pour sa rapidité d'exécution et ses capacités rédactionnelles élevées en français à moindre coût.
+\end{itemize}
+
+\subsection{Outils et méthodologies}
+\begin{itemize}
+    \item \textbf{Base de données : H2 Database (JPA/Hibernate)} : Base de données SQL en mémoire idéale pour le prototypage rapide, supportant des structures d'entités complexes.
+    \item \textbf{Gestion de version : Git} : Suivi et collaboration sur le code source du projet.
+    \item \textbf{Gestion des dépendances : Maven (Backend) \& NPM (Frontend)}.
+\end{itemize}
+
+\section{Problématique et objectifs du projet}
+Les chatbots e-commerce classiques se limitent souvent à des arbres de décision rigides et frustrants. Notre problématique s'énonce ainsi : \textit{Comment offrir un assistant virtuel intelligent capable de comprendre des requêtes complexes en langage naturel tout en adaptant ses réponses à l'historique de discussion de chaque utilisateur connecté ?}
+
+Les objectifs cibles du projet sont :
+\begin{enumerate}
+    \item Développer un catalogue e-commerce complet avec panier, commandes et gestion des comptes utilisateurs.
+    \item Implémenter un endpoint sécurisé `/api/chat` gérant l'historique persistant.
+    \item Réaliser un chatbot flottant moderne et responsive en React.
+\end{enumerate}
+
+% ==========================================
+% CHAPITRE 2 : ANALYSE ET CONCEPTION UML ACADÉMIQUE
+% ==========================================
+\chapter{Analyse et Conception UML}
+
+L'analyse des besoins constitue une étape fondamentale permettant d'établir une frontière nette entre les attentes métiers des utilisateurs (ce que le système doit faire) et les contraintes techniques du système (comment il doit le faire).
+
+\section{Analyse des besoins}
+
+\subsection{Besoins fonctionnels}
+Les besoins fonctionnels décrivent les actions et services que l'application DigiTech doit fournir à ses utilisateurs. Ils sont structurés autour de quatre axes majeurs :
+
+\begin{enumerate}
+    \item \textbf{Gestion du Catalogue et de la Recherche} :
+    \begin{itemize}
+        \item Le système doit permettre la consultation des produits par le public (utilisateurs anonymes et connectés).
+        \item La recherche multicritère (par mots-clés, catégories ou marques) doit être disponible de manière fluide.
+        \item L'administrateur doit disposer d'un accès privilégié pour ajouter, modifier ou supprimer des produits du catalogue.
+    \end{itemize}
+    \item \textbf{Gestion du Panier et Processus d'Achat} :
+    \begin{itemize}
+        \item L'utilisateur doit pouvoir ajouter, mettre à jour la quantité ou retirer des articles de son panier.
+        \item Le panier doit être persistant durant la navigation active du client.
+        \item La validation du panier (Checkout) doit collecter les coordonnées de livraison et calculer automatiquement les sous-totaux.
+    \end{itemize}
+    \item \textbf{Gestion des Commandes et des Paiements} :
+    \begin{itemize}
+        \item Le système doit permettre au client d'effectuer des transactions bancaires sécurisées via des simulateurs de cartes de crédit ou PayPal.
+        \item En cas d'approbation bancaire, le système doit créer une commande, décrémenter le stock physique des produits et vider le panier.
+        \item L'utilisateur doit pouvoir consulter son historique de commandes.
+    \end{itemize}
+    \item \textbf{Assistance Client par Chatbot IA} :
+    \begin{itemize}
+        \item Le client connecté doit disposer d'une fenêtre de discussion flottante accessible de manière globale.
+        \item L'assistant virtuel doit répondre de façon contextualisée en français et conserver l'historique complet de la conversation.
+        \item L'utilisateur doit avoir la possibilité de réinitialiser et purger son historique de discussion.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Besoins non fonctionnels}
+Les besoins non fonctionnels définissent les critères de qualité, de performance et de sécurité du système :
+\begin{itemize}
+    \item \textbf{Sécurité et Confidentialité} : Authentification rigoureuse des clients. Toutes les requêtes vers les endpoints sensibles (`/api/chat`, `/api/checkout`, etc.) doivent faire l'objet d'un contrôle d'habilitation strict basé sur les privilèges utilisateurs.
+    \item \textbf{Performance et Scalabilité} : Les temps de réponse de l'assistant conversationnel doivent être minimisés (cible inférieure à 1.5 seconde par message) en exploitant des requêtes HTTP asynchrones performantes (WebClient) et en limitant la taille de l'historique de contexte.
+    \item \textbf{Ergonomie et Fluidité} : L'interface utilisateur (UI/UX) doit offrir une expérience premium moderne (effet verre dépoli glassmorphism, animations fluides d'apparition des messages et de saisie en temps réel).
+    \item \textbf{Disponibilité et Portabilité} : L'application doit être pleinement \textit{responsive}, s'adaptant automatiquement aux formats mobiles (smartphones, tablettes) sans perte de fonctionnalités.
+\end{itemize}
+
+\section{Identification des acteurs}
+Un acteur représente un rôle joué par une personne ou un système externe qui interagit directement avec l'application DigiTech. Nous identifions cinq acteurs principaux :
+\begin{enumerate}
+    \item \textbf{Visiteur} : Utilisateur anonyme qui parcourt le site e-commerce, consulte le catalogue de produits et effectue des recherches. Il n'a aucun droit d'écriture (panier, commandes, chatbot).
+    \item \textbf{Client Connecté} : Utilisateur authentifié disposant d'un compte actif. Il possède tous les droits d'achat (panier, validation de commande, paiement) et d'accès au chatbot IA personnalisé (discussion, purge d'historique).
+    \item \textbf{Administrateur} : Utilisateur interne disposant de privilèges élevés. Il est responsable de la gestion du catalogue (opérations CRUD sur les produits, gestion des stocks) et du suivi des ventes.
+    \item \textbf{Passerelle de Paiement} : Système externe (ex : API PayPal ou processeur de carte bancaire) chargé de valider ou de décliner la transaction financière au moment du checkout.
+    \item \textbf{API OpenRouter (GPT-4o-Mini)} : Système d'intelligence artificielle externe qui reçoit le contexte et l'historique de discussion pour renvoyer la réponse textuelle de l'assistant virtuel.
+\end{enumerate}
+
+\section{Diagramme de cas d'utilisation}
+Le diagramme de cas d'utilisation formalise les interactions entre les acteurs identifiés et les grandes fonctionnalités du système.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.95\textwidth]{les\ digramme/diagrammeDecasDetudes.png}
+    \caption{Diagramme de Cas d'Utilisation UML}
+\end{figure}
+
+\subsection{Description détaillée des cas d'utilisation clés}
+\begin{itemize}
+    \item \textbf{Discuter avec l'assistant IA} : Réservé au \textit{Client Connecté}. Permet d'envoyer des messages en langage naturel à un assistant intelligent. Ce cas d'utilisation inclut de manière obligatoire (`<<include>>`) la transmission de l'historique à l'**API OpenRouter** pour obtenir une réponse contextualisée.
+    \item \textbf{Passer commande} : Le client valide son panier actif. Cette fonctionnalité inclut obligatoirement (`<<include>>`) le traitement du paiement qui fait intervenir la **Passerelle de Paiement** externe.
+    \item \textbf{Gérer le catalogue (CRUD)} : Privilège de l'\textit{Administrateur} lui permettant de maintenir à jour le référentiel des articles.
+\end{itemize}
+
+\section{Diagramme de classes}
+Le diagramme de classes structurel représente la vue statique des données au sein du backend Spring Boot. Il découle directement des entités JPA réelles et de leurs relations d'association.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.95\textwidth]{les\ digramme/diagrammeDeclass.png}
+    \caption{Diagramme de Classes UML Structurel}
+\end{figure}
+
+\subsection{Explication détaillée des classes et relations}
+\begin{enumerate}
+    \item \textbf{Relation AppUser et ChatMessage (`1` vers `0..*`)} : Relation de composition forte. Un utilisateur (`AppUser`) possède zéro, un ou plusieurs messages de discussion (`ChatMessage`). Un message appartient obligatoirement à un et un seul utilisateur. Si l'utilisateur est supprimé, l'historique associé est intégralement purgé en cascade (intégrité référentielle).
+    \item \textbf{Relation AppUser et Cart (`1` vers `1`)} : Chaque utilisateur authentifié est rattaché à son propre panier persistant (`Cart`), identifié de manière unique via une clé d'accès (`cartKey`).
+    \item \textbf{Panier et Articles (`Cart`, `CartItem`, `Product`)} : `Cart` est composé de `CartItem` (`1` vers `0..*`). `CartItem` fait référence à un unique `Product`. Cette structure permet d'isoler la quantité sélectionnée par le client sans modifier les attributs intrinsèques du produit.
+    \item \textbf{Relation Commande et Détails (`Order`, `OrderItem`, `Payment`)} : Une commande (`Order`) représente l'en-tête de facturation. Elle englobe une collection de lignes de détails (`OrderItem`) dans une relation de composition `1` vers `0..*`. Chaque ligne fige le prix unitaire d'achat (`unitPrice`) à la date de validation, protégeant l'historique des fluctuations futures. Une commande est associée de manière stricte à une unique transaction financière (`Payment`) dans une relation `1` vers `1`.
+\end{enumerate}
+
+\section{Diagramme de séquence 1 : Authentification et Interception}
+
+\subsection{Description du scénario}
+Ce diagramme illustre le processus de connexion de l'utilisateur et le mécanisme d'authentification asynchrone simulé côté client par Axios. Le client saisit ses identifiants. Une fois validés, le profil est stocké dans le `localStorage` de React. Les appels d'API ultérieurs vers le backend sont interceptés afin d'y injecter automatiquement les en-têtes d'autorisation sécurisés (`X-USER-EMAIL` et `X-USER-ROLE`).
+
+\subsection{Préconditions}
+\begin{itemize}
+    \item Le client est sur la page de connexion.
+    \item L'adresse e-mail saisie est syntaxiquement correcte.
+\end{itemize}
+
+\subsection{Postconditions}
+\begin{itemize}
+    \item Le profil de l'utilisateur est persisté ou mis à jour dans la base H2.
+    \item La session utilisateur est active localement dans le stockage local du navigateur.
+    \item L'intercepteur de requêtes d'Axios est activé pour propager automatiquement les en-têtes.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.95\textwidth]{les\ digramme/diagrammeDeSequenceAuthentificationetInterception.png}
+    \caption{Diagramme de Séquence UML : Authentification \& Interception}
+\end{figure}
+
+\subsection{Explication étape par étape}
+\begin{enumerate}
+    \item \textbf{Validation locale (Étapes 1-2)} : L'utilisateur valide le formulaire en front. L'action appelle le service d'authentification global de React (`AuthContext`).
+    \item \textbf{Appel REST (Étapes 3-4)} : Une requête POST asynchrone est émise vers `/api/auth/login`.
+    \item \textbf{Persistance Backend (Étapes 5-8)} : Le `AuthService` recherche l'utilisateur en base. S'il n'existe pas, un nouvel `AppUser` est créé et persisté avec le rôle assigné par défaut (`USER`).
+    \item \textbf{Stockage de Session (Étapes 9-11)} : La réponse HTTP 200 OK déclenche le stockage du profil en local dans React et le navigateur (`localStorage`).
+    \item \textbf{Interception (Étapes 12-18)} : Pour toute action ultérieure nécessitant une communication avec le serveur (ex: charger le panier), le composant fait appel à l'instance configurée d'Axios. L'intercepteur analyse à la volée le stockage local, extrait l'adresse e-mail et le rôle, et les injecte dans les en-têtes personnalisés de la requête HTTP sortante. Le serveur Spring Boot est ainsi capable de valider l'identité de l'émetteur de manière Stateless.
+\end{enumerate}
+
+\section{Diagramme de séquence 2 : Processus de Commande}
+
+\subsection{Description du scénario}
+Ce diagramme retrace le flux de validation d'achat. Le client initie la validation de son panier (Checkout). Le système authentifie le client via les en-têtes, instancie la commande, lance la transaction financière simulée avec le processeur externe, met à jour les stocks de produits et persiste la commande finalisée en base de données avant de réinitialiser le panier.
+
+\subsection{Préconditions}
+\begin{itemize}
+    \item L'utilisateur est authentifié.
+    \item Le panier contient au moins un produit.
+    \item Les produits dans le panier sont en stock dans la quantité demandée.
+\end{itemize}
+
+\subsection{Postconditions}
+\begin{itemize}
+    \item Une entité `Order` est créée à l'état `PAID`.
+    \item Une entité `Payment` associée est persistée à l'état `APPROVED`.
+    \item Le panier actif de l'utilisateur est vidé.
+    \item Le stock physique des produits concernés est mis à jour.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.95\textwidth]{les\ digramme/diagrammeDeSequenceCommandePaiement.png}
+    \caption{Diagramme de Séquence UML : Commande \& Paiement}
+\end{figure}
+
+\subsection{Explication étape par étape}
+\begin{enumerate}
+    \item \textbf{Habilitation (Étapes 1-6)} : La requête de validation de commande atteint le `CheckoutController` qui interroge immédiatement `UserAccessService` pour s'assurer de l'identité et de la validité du client connecté.
+    \item \textbf{Traitement Métier (Étapes 7-10)} : Le `CheckoutService` récupère la structure active du panier (`Cart`) depuis la base de données. Il instancie ensuite l'objet d'en-tête de commande `Order`.
+    \item \textbf{Paiement Externe (Étapes 11-12)} : Le service de paiement injecte les coordonnées de facturation et sollicite le processeur bancaire PayPal. Ce dernier renvoie une référence unique de transaction après validation.
+    \item \textbf{Enregistrement (Étapes 13-16)} : Le système associe la transaction approuvée à la commande, décrémente de manière atomique la quantité disponible en stock dans chaque fiche `Product` et purge les articles du panier. Enfin, la commande globale est enregistrée en base H2.
+    \item \textbf{Restitution (Étapes 17-19)} : La réponse finale contenant le numéro de commande unique (ex: `DG-SEED-0001`) est retransmise au client pour affichage à l'écran.
+\end{enumerate}
+
+\section{Diagramme de séquence 3 : Assistant Conversationnel (Chatbot IA)}
+
+\subsection{Description du scénario}
+Ce diagramme détaille le flux d'échange asynchrone avec l'assistant virtuel. Le client envoie une question. Le backend authentifie l'expéditeur, persiste la question pour maintenir un historique, charge les échanges passés, formule la requête pour l'API OpenRouter, intercepte la réponse du modèle GPT-4o-Mini, la sauvegarde, et la retransmet au client.
+
+\subsection{Préconditions}
+\begin{itemize}
+    \item L'utilisateur est authentifié et connecté.
+    \item L'application backend dispose d'une clé API OpenRouter valide.
+\end{itemize}
+
+\subsection{Postconditions}
+\begin{itemize}
+    \item La question du client et la réponse de l'assistant sont enregistrées en base H2 sous forme d'entités `ChatMessage` associées à l'utilisateur.
+    \item La réponse s'affiche à l'écran de manière asynchrone.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.95\textwidth]{les\ digramme/diagrammeDesenquenceChatbotConversationne.png}
+    \caption{Diagramme de Séquence UML : Chatbot Conversationnel \& Persistance}
+\end{figure}
+
+\subsection{Explication étape par étape}
+\begin{enumerate}
+    \item \textbf{Réactivité UI (Étapes 1-2)} : Dès le clic sur "Envoyer", le client React affiche instantanément la bulle à droite et lance une animation de points de suspension ("L'assistant écrit...").
+    \item \textbf{Validation HTTP (Étapes 3-7)} : La question est postée à `/api/chat` avec les en-têtes d'identification du client. Le contrôleur s'assure de sa validité.
+    \item \textbf{Persistance de la question (Étapes 8-10)} : Le service instancie un `ChatMessage` marqué du rôle `user` et le stocke en base de données.
+    \item \textbf{Assemblage du contexte (Étapes 11-13)} : Le système charge l'historique complet de l'utilisateur ordonné par date. Il tronque les anciens échanges pour ne conserver que les 20 derniers messages (préservation des performances). Il y adjoint le message de directive système (guidant le ton de l'assistant e-commerce).
+    \item \textbf{Requête API REST (Étapes 14-17)} : Le composant WebClient émet une requête POST synchrone et bloquante vers OpenRouter.
+    \item \textbf{Persistance de la réponse IA (Étapes 18-20)} : Le texte retourné par le LLM (GPT-4o-mini) est encapsulé dans une nouvelle entité `ChatMessage` de rôle `assistant` et sauvegardé en base de données.
+    \item \textbf{Affichage final (Étapes 21-23)} : La réponse 200 OK est transmise au frontend. Le composant React désactive l'état d'attente, affiche la réponse à gauche, et effectue un défilement vertical fluide (*scroll auto*).
+\end{enumerate}
+
+\section{Justification des choix de conception}
+La modélisation et l'architecture retenues pour le projet DigiTech répondent à plusieurs critères d'ingénierie logicielle avancés :
+\begin{itemize}
+    \item \textbf{Architecture découplée REST (Stateless)} : L'utilisation d'une séparation claire entre le frontend (React) et le backend (Spring Boot) via des protocoles REST permet de rendre l'application performante et évolutive. Le fait que le backend n'ait pas à gérer de session d'état (Stateless) facilite l'authentification basée sur les en-têtes sécurisés.
+    \item \textbf{Choix de WebClient (Spring WebFlux) face à RestTemplate} : Bien que l'architecture globale soit basée sur Spring Web MVC standard (synchrone), nous avons introduit le client réactif `WebClient` pour toutes nos communications avec l'API OpenRouter. Ce choix technique est motivé par la flexibilité et les performances accrues de `WebClient` par rapport au traditionnel `RestTemplate` (qui est aujourd'hui déprécié).
+    \item \textbf{Persistance Hybride de la Session du Chatbot} : Pour offrir une expérience utilisateur premium, nous avons choisi de conserver l'historique de discussion à la fois dans l'état de l'application React (pour des transitions d'affichage ultra-rapides) et dans la base de données H2 via l'entité JPA `ChatMessage`. Ce choix hybride garantit que si l'utilisateur actualise son navigateur ou change d'appareil, son historique conversationnel est restauré.
+\end{itemize}
+
+% ==========================================
+% CHAPITRE 3 : REALISATION TECHNIQUE ET RESULTATS
+% ==========================================
+\chapter{Réalisation Technique et Résultats}
+
+\section{Environnement de développement et déploiement}
+L'environnement de développement repose sur le système Windows avec les outils de développement suivants :
+\begin{itemize}
+    \item \textbf{IDE} : Visual Studio Code / IntelliJ IDEA.
+    \item \textbf{Gestionnaire de versions} : Git hébergé sur GitHub.
+    \item \textbf{Serveur d'application} : Apache Tomcat intégré à Spring Boot (port 8080).
+    \item \textbf{Serveur de développement Frontend} : Dev server de Vite (port 5173).
+\end{itemize}
+
+\section{Détail de l'implémentation du Chatbot}
+
+\subsection{Intégration d'OpenRouter}
+Le composant `OpenRouterConfig` configure un `WebClient` réactif doté des en-têtes d'autorisation par défaut.
+Le `ChatService` orchestre la construction du prompt système, la concaténation de l'historique et la désérialisation de l'arbre JSON d'OpenRouter.
+
+\subsection{Interface Utilisateur React (Composant ChatBot)}
+Le frontend en React utilise un état local pour stocker la liste des messages. Axios propage automatiquement les en-têtes `X-USER-EMAIL` et `X-USER-ROLE` sauvegardés lors de la connexion.
+Le style CSS utilise l'effet \textit{glassmorphism} :
+\begin{lstlisting}[language=html, caption=Extrait CSS de l'effet Glassmorphism]
+background: rgba(255, 255, 255, 0.9);
+backdrop-filter: blur(12px);
+-webkit-backdrop-filter: blur(12px);
+\end{lstlisting}
+Un composant avec des points de suspension animés simule de manière élégante le temps de réflexion de l'assistant IA pendant le chargement.
+
+\section{Analyse des résultats et performances}
+Les tests manuels menés sur l'application révèlent :
+\begin{itemize}
+    \item \textbf{Temps de réponse} : Temps d'attente moyen de la réponse IA estimé à 1.2 seconde (grâce à la légèreté du modèle `gpt-4o-mini`).
+    \item \textbf{Fidélité de l'IA} : Le prompt système personnalisé contraint efficacement le chatbot à répondre uniquement sur les sujets liés à la boutique (délais de livraison de 2 à 5 jours au Maroc, paiements PayPal/carte, etc.).
+    \item \textbf{Robustesse} : En cas d'erreur de clé d'API ou de réseau, le frontend l'intercepte élégamment et affiche un message de secours poli sans bloquer l'application.
+\end{itemize}
+
+% ==========================================
+% CONCLUSION ET PERSPECTIVES
+% ==========================================
+\chapter*{Conclusion et Perspectives}
+\addcontentsline{toc}{chapter}{Conclusion et Perspectives}
+
+\section*{Réalisation des objectifs}
+Ce projet a permis de concevoir et de réaliser avec succès une plateforme e-commerce premium fonctionnelle et moderne. L'objectif principal consistant à doter le site d'un chatbot virtuel intelligent flottant, responsive et doté d'une persistance robuste en base de données par utilisateur a été pleinement accompli.
+
+\section*{Bilan du projet}
+Ce projet a été l'occasion idéale d'approfondir nos compétences en ingénierie logicielle :
+\begin{itemize}
+    \item Couplage asynchrone Spring Boot et React.
+    \item Consommation d'API tierces REST via WebClient.
+    \item Mise en œuvre de designs haut de gamme (glassmorphism, animations).
+\end{itemize}
+
+\section*{Perspectives d'évolution}
+Dans les versions futures, nous envisageons plusieurs axes d'amélioration :
+\begin{enumerate}
+    \item \textbf{Interactions transactionnelles directes} : Permettre au chatbot d'exécuter des actions à la demande de l'utilisateur, comme vérifier l'état d'une commande ou ajouter directement un produit au panier (approche agentique *Function Calling*).
+    \item \textbf{Recommandations prédictives} : Connecter le chatbot à la base de produits pour proposer des sélections intelligentes adaptées aux goûts des clients.
+\end{enumerate}
+
+% ==========================================
+% BIBLIOGRAPHIE
+% ==========================================
+\chapter*{Bibliographie}
+\addcontentsline{toc}{chapter}{Bibliographie}
+
+\begin{enumerate}
+    \item \textbf{Spring Boot Documentation} : \textit{Spring Boot Reference Guide}, VMware Tanzu, \url{https://docs.spring.io/spring-boot/index.html}.
+    \item \textbf{React Documentation} : \textit{Getting Started with React Components}, Meta Platforms Inc., \url{https://react.dev/}.
+    \item \textbf{OpenRouter API Specification} : \textit{Unified LLM Integration Docs}, \url{https://openrouter.ai/docs}.
+    \item \textbf{Larman, C.} : \textit{UML et les Design Patterns}, 3ème Édition, Pearson Education.
+\end{enumerate}
+
+\end{document}

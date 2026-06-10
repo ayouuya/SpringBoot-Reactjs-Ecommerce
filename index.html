@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DigiTech - Présentation E-Commerce & Chatbot IA</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Présentation interactive de DigiTech - Plateforme E-Commerce Premium avec Chatbot IA Intégré (Spring Boot 3 & React)">
+  <meta name="author" content="Ayoub">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Background Animated Glow Blobs -->
+  <div class="bg-glow-wrapper">
+    <div class="bg-blob bg-blob-1"></div>
+    <div class="bg-blob bg-blob-2"></div>
+    <div class="bg-blob bg-blob-3"></div>
+  </div>
+
+  <!-- Menu Toggle Button -->
+  <button id="menuToggleBtn" class="menu-toggle" aria-label="Ouvrir le menu" title="Sommaire de la présentation">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
+  <!-- Sidebar Navigation Menu -->
+  <aside id="sidebarMenu" class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo-group">
+        <div class="sidebar-logo-icon">
+          <i class="fa-solid fa-laptop-code"></i>
+        </div>
+        <span class="sidebar-title">Sommaire</span>
+      </div>
+      <button id="sidebarCloseBtn" class="sidebar-close" aria-label="Fermer le menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    
+    <nav class="sidebar-menu-wrapper">
+      <ul class="sidebar-menu">
+        <!-- JS will dynamically populate the menu or we define it here for direct mapping -->
+        <li class="sidebar-item active" data-slide="0"><button class="sidebar-item-btn"><span class="sidebar-item-index">01</span> Page de garde</button></li>
+        <li class="sidebar-item" data-slide="1"><button class="sidebar-item-btn"><span class="sidebar-item-index">02</span> Introduction</button></li>
+        <li class="sidebar-item" data-slide="2"><button class="sidebar-item-btn"><span class="sidebar-item-index">03</span> Problématique</button></li>
+        <li class="sidebar-item" data-slide="3"><button class="sidebar-item-btn"><span class="sidebar-item-index">04</span> Solution proposée</button></li>
+        <li class="sidebar-item" data-slide="4"><button class="sidebar-item-btn"><span class="sidebar-item-index">05</span> Analyse & Conception</button></li>
+        <li class="sidebar-item" data-slide="5"><button class="sidebar-item-btn"><span class="sidebar-item-index">06</span> UML - Cas d'utilisation</button></li>
+        <li class="sidebar-item" data-slide="6"><button class="sidebar-item-btn"><span class="sidebar-item-index">07</span> UML - Diagramme de classes</button></li>
+        <li class="sidebar-item" data-slide="7"><button class="sidebar-item-btn"><span class="sidebar-item-index">08</span> UML - Séquence Connexion</button></li>
+        <li class="sidebar-item" data-slide="8"><button class="sidebar-item-btn"><span class="sidebar-item-index">09</span> UML - Séquence Achat</button></li>
+        <li class="sidebar-item" data-slide="9"><button class="sidebar-item-btn"><span class="sidebar-item-index">10</span> UML - Séquence Chatbot</button></li>
+        <li class="sidebar-item" data-slide="10"><button class="sidebar-item-btn"><span class="sidebar-item-index">11</span> Technologies du projet</button></li>
+        <li class="sidebar-item" data-slide="11"><button class="sidebar-item-btn"><span class="sidebar-item-index">12</span> Fonctionnalité - Catalogue</button></li>
+        <li class="sidebar-item" data-slide="12"><button class="sidebar-item-btn"><span class="sidebar-item-index">13</span> Fonctionnalité - Panier</button></li>
+        <li class="sidebar-item" data-slide="13"><button class="sidebar-item-btn"><span class="sidebar-item-index">14</span> Fonctionnalité - Chatbot IA</button></li>
+        <li class="sidebar-item" data-slide="14"><button class="sidebar-item-btn"><span class="sidebar-item-index">15</span> Fonctionnalité - Admin CRUD</button></li>
+        <li class="sidebar-item" data-slide="15"><button class="sidebar-item-btn"><span class="sidebar-item-index">16</span> Conclusion & Bilan</button></li>
+        <li class="sidebar-item" data-slide="16"><button class="sidebar-item-btn"><span class="sidebar-item-index">17</span> Perspectives futures</button></li>
+      </ul>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <div>Projet de Fin d'Études</div>
+      <div>Filière : Génie Logiciel / Web</div>
+    </div>
+  </aside>
+
+  <!-- Sidebar Overlay Backdrop -->
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+  <!-- MAIN PRESENTATION WRAPPER -->
+  <main class="presentation-container">
+
+    <!-- SLIDE 1 : PAGE DE GARDE -->
+    <section class="slide active" id="slide-0">
+      <div class="cover-card fade-in-up">
+        <div class="cover-badge">
+          <i class="fa-solid fa-graduation-cap"></i> Projet de module
+        </div>
+        <h1 class="cover-title">Conception et Réalisation d'une Plateforme E-Commerce Premium avec Chatbot IA Intégré</h1>
+        <p class="cover-subtitle">Plateforme <strong>DigiTech</strong> — Couplage asynchrone d'un backend robuste sous Spring Boot 3 et d'une interface utilisateur réactive sous React.</p>
+        
+        <div class="cover-divider"></div>
+        
+        <div class="cover-meta-grid">
+          <div class="cover-meta-item">
+            <span class="cover-meta-label">Réalisé par</span>
+            <span class="cover-meta-value">Aya ET-TOUIL</span>
+          </div>
+          <div class="cover-meta-item">
+            <span class="cover-meta-label">Soutenu le</span>
+            <span class="cover-meta-value">12 JUIN 2026</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2 : INTRODUCTION -->
+    <section class="slide" id="slide-1">
+      <div class="slide-content">
+        <header class="slide-header">
+          <div class="slide-title-group">
+            <span class="slide-category">Contexte du Projet</span>
+            <h2 class="slide-title">Introduction</h2>
+          </div>
+          <span class="slide-number">02 / 17</span>
+        </header>
+        
+        <div class="slide-body">
+          <div class="layout-split">
+            <div class="layout-split-left">
+              <ul class="bullet-list">
+                <li class="bullet-item">
+                  <span class="bullet-dot blue"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">Le contexte de l'E-Commerce</span>
+                    <span class="bullet-desc">Croissance exponentielle du commerce en ligne au Maroc. L'exigence des consommateurs s'oriente vers des plateformes plus rapides, fluides et interactives.</span>
+                  </div>
+                </li>
+                <li class="bullet-item">
+                  <span class="bullet-dot purple"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">Le Besoin d'Assistance</span>
+                    <span class="bullet-desc">Un parcours d'achat réussi nécessite un support instantané. Les utilisateurs souhaitent des réponses immédiates concernant le catalogue, la livraison ou les commandes sans quitter leur navigation.</span>
+                  </div>
+                </li>
+                <li class="bullet-item">
+                  <span class="bullet-dot green"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">Objectifs Clés</span>
+                    <span class="bullet-desc">Développer un site e-commerce complet (DigiTech) doté d'un catalogue dynamique, d'un panier persistant, d'un checkout sécurisé, et d'un assistant conversationnel intelligent personnalisé.</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            
+            <div class="layout-split-right">
+              <div class="glass-card glow-blue" style="text-align: center; width: 100%;">
+                <div class="card-icon" style="margin: 0 auto 15px;"><i class="fa-solid fa-lightbulb"></i></div>
+                <h3 class="card-title">Concept DigiTech</h3>
+                <p class="card-text">L'union d'un système de vente en ligne performant et d'un assistant virtuel intelligent, offrant une expérience utilisateur (UX) haut de gamme et interactive.</p>
+                <div class="badge-group" style="justify-content: center; margin-top: 15px;">
+                  <span class="tech-badge blue">Spring Boot</span>
+                  <span class="tech-badge purple">React</span>
+                  <span class="tech-badge cyan">Chatbot LLM</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3 : PROBLEMATIQUE -->
+    <section class="slide" id="slide-2">
+      <div class="slide-content">
+        <header class="slide-header">
+          <div class="slide-title-group">
+            <span class="slide-category">Analyse Critique</span>
+            <h2 class="slide-title">Problématique à Résoudre</h2>
+          </div>
+          <span class="slide-number">03 / 17</span>
+        </header>
+        
+        <div class="slide-body">
+          <div class="layout-split">
+            <div class="layout-split-left">
+              <div class="glass-card glow-purple" style="border-left: 4px solid var(--color-red); margin-bottom: 20px;">
+                <h3 class="card-title" style="color: #fca5a5;"><i class="fa-solid fa-triangle-exclamation"></i> Limites des Chatbots Classiques</h3>
+                <p class="card-text">Les solutions de support client e-commerce existantes reposent souvent sur des arbres de décision rigides et frustrants. Ils manquent de contextualisation et ne s'adaptent pas à l'historique ou aux informations du profil utilisateur connecté.</p>
+              </div>
+              
+              <ul class="bullet-list">
+                <li class="bullet-item">
+                  <span class="bullet-dot red"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">Rupture du Contexte conversationnel</span>
+                    <span class="bullet-desc">La plupart des chatbots en ligne oublient les questions précédentes de l'utilisateur dès que celui-ci actualise ou change de page.</span>
+                  </div>
+                </li>
+                <li class="bullet-item">
+                  <span class="bullet-dot red"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">Complexité d'Intégration et Coûts</span>
+                    <span class="bullet-desc">Intégrer des agents IA avancés comme GPT-4 nécessite un contrôle rigoureux du contexte pour éviter l'explosion des coûts d'API (tokens) et des temps de réponse excessifs.</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            
+            <div class="layout-split-right">
+              <div class="glass-card glow-indigo" style="background: rgba(239, 68, 68, 0.02); border-color: rgba(239, 68, 68, 0.15);">
+                <div class="card-icon" style="color: var(--color-red);"><i class="fa-solid fa-circle-question"></i></div>
+                <h3 class="card-title">Question de Recherche</h3>
+                <p class="card-text"><em>« Comment offrir un assistant virtuel intelligent capable de comprendre des requêtes complexes en langage naturel tout en adaptant ses réponses à l'historique de discussion de chaque utilisateur connecté de manière sécurisée et performante ? »</em></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4 : SOLUTION PROPOSEE -->
+    <section class="slide" id="slide-3">
+      <div class="slide-content">
+        <header class="slide-header">
+          <div class="slide-title-group">
+            <span class="slide-category">Notre Approche</span>
+            <h2 class="slide-title">La Solution DigiTech</h2>
+          </div>
+          <span class="slide-number">04 / 17</span>
+        </header>
+        
+        <div class="slide-body">
+          <div class="layout-grid grid-cols-3">
+            <div class="glass-card glow-blue">
+              <div class="card-icon"><i class="fa-solid fa-store"></i></div>
+              <h3 class="card-title">Plateforme E-Commerce</h3>
+              <p class="card-text">Un site de vente en ligne complet, fluide, et réactif avec un catalogue administrable, un panier géré par session et des commandes persistantes.</p>
+            </div>
+            
+            <div class="glass-card glow-purple">
+              <div class="card-icon"><i class="fa-solid fa-comments"></i></div>
+              <h3 class="card-title">Chatbot IA Persistant</h3>
+              <p class="card-text">Un assistant virtuel flottant doté d'une mémoire continue. L'historique est sauvegardé en base de données H2 et se recharge automatiquement à la connexion de l'utilisateur.</p>
+            </div>
+            
+            <div class="glass-card glow-cyan">
+              <div class="card-icon"><i class="fa-solid fa-user-shield"></i></div>
+              <h3 class="card-title">Architecture Sécurisée</h3>
+              <p class="card-text">Filtrage et isolation de l'historique conversationnel par utilisateur connecté à l'aide d'en-têtes HTTP injectés par un intercepteur front Axios et contrôlés par le backend.</p>
+            </div>
+          </div>
+          
+          <div class="glass-card glow-green" style="margin-top: 25px; flex-direction: row; align-items: center; gap: 20px; padding: 20px;">
+            <div class="card-icon" style="color: var(--color-green); flex-shrink: 0;"><i class="fa-solid fa-star"></i></div>
+            <div>
+              <h4 class="card-title" style="font-size: 1.1rem; margin-bottom: 4px;">Valeur ajoutée de l'IA (GPT-4o-mini via OpenRouter)</h4>
+              <p class="card-text">L'assistant n'est pas figé : il discute couramment en français, comprend le contexte d'achat, propose des explications sur les produits et oriente le client sur les conditions réelles de la boutique (ex: livraison gratuite, paiements).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5 : ANALYSE ET CONCEPTION -->
+    <section class="slide" id="slide-4">
+      <div class="slide-content">
+        <header class="slide-header">
+          <div class="slide-title-group">
+            <span class="slide-category">Méthodologie Logicielle</span>
+            <h2 class="slide-title">Analyse et Conception</h2>
+          </div>
+          <span class="slide-number">05 / 17</span>
+        </header>
+        
+        <div class="slide-body">
+          <div class="layout-split">
+            <div class="layout-split-left">
+              <ul class="bullet-list">
+                <li class="bullet-item">
+                  <span class="bullet-dot blue"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">Démarche de Conception</span>
+                    <span class="bullet-desc">Utilisation d'une modélisation UML stricte et normalisée pour décrire les cas d'utilisation (portée fonctionnelle), la structure des entités persistantes (modèle statique) et les flux transactionnels (modèle dynamique).</span>
+                  </div>
+                </li>
+                <li class="bullet-item">
+                  <span class="bullet-dot purple"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">Architecture REST Découplée (Stateless)</span>
+                    <span class="bullet-desc">Séparation nette des responsabilités : le backend Spring Boot fournit des API REST légères, tandis que le frontend React orchestre l'interface. Les échanges s'effectuent sans conservation d'état de session sur le serveur.</span>
+                  </div>
+                </li>
+                <li class="bullet-item">
+                  <span class="bullet-dot cyan"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">Intégration Réactive (WebClient)</span>
+                    <span class="bullet-desc">Utilisation du framework Spring WebFlux côté backend pour solliciter de manière asynchrone et non-bloquante l'API OpenRouter, optimisant la charge du serveur sous forte concurrence.</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            
+            <div class="layout-split-right">
+              <div class="glass-card glow-indigo">
+                <h3 class="card-title"><i class="fa-solid fa-sitemap"></i> Spécifications Techniques</h3>
+                <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+                  <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 6px;">
+                    <span class="card-text">Format des API</span>
+                    <span class="tech-badge blue">JSON REST</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 6px;">
+                    <span class="card-text">Base de données</span>
+                    <span class="tech-badge purple">H2 (Relatif SQL)</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 6px;">
+                    <span class="card-text">ORM</span>
+                    <span class="tech-badge cyan">JPA / Hibernate</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span class="card-text">Modèle d'IA</span>
+                    <span class="tech-badge green">GPT-4o-mini</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6 : UML - CAS D'UTILISATION -->
+    <section class="slide" id="slide-5">
+      <div class="slide-content">
+        <header class="slide-header">
+          <div class="slide-title-group">
+            <span class="slide-category">Modélisation UML</span>
+            <h2 class="slide-title">Diagramme de Cas d'Utilisation</h2>
+          </div>
+          <span class="slide-number">06 / 17</span>
+        </header>
+        
+        <div class="slide-body">
+          <div class="layout-split">
+            <div class="layout-split-left">
+              <ul class="bullet-list">
+                <li class="bullet-item">
+                  <span class="bullet-dot blue"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">Acteurs Externes du Système</span>
+                    <span class="bullet-desc">Identification de 3 rôles physiques (Visiteur, Client Connecté, Administrateur) et de 2 systèmes externes (Passerelle de Paiement PayPal, API OpenRouter).</span>
+                  </div>
+                </li>
+                <li class="bullet-item">
+                  <span class="bullet-dot purple"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">Interactions du Client Connecté</span>
+                    <span class="bullet-desc">Il dispose d'un panier persistant, peut valider sa commande (ce qui inclut le paiement externe) et discuter avec l'assistant IA (qui inclut l'appel à OpenRouter).</span>
+                  </div>
+                </li>
+                <li class="bullet-item">
+                  <span class="bullet-dot green"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">Accès Administrateur</span>
+                    <span class="bullet-desc">Il est restreint aux opérations CRUD de gestion du catalogue et des stocks, requérant son authentification préalable.</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            
+            <div class="layout-split-right">
+              <div class="diagram-container" data-diagram="usecase" title="Cliquer pour zoomer">
+                <img src="les digramme/diagrammeDecasDetudes.png" alt="Diagramme de cas d'utilisation UML">
+                <div class="diagram-overlay">
+                  <div class="zoom-icon-btn"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                  Zoomer sur le diagramme
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7 : UML - DIAGRAMME DE CLASSES -->
+    <section class="slide" id="slide-6">
+      <div class="slide-content">
+        <header class="slide-header">
+          <div class="slide-title-group">
+            <span class="slide-category">Modélisation UML</span>
+            <h2 class="slide-title">Diagramme de Classes Structurel</h2>
+          </div>
+          <span class="slide-number">07 / 17</span>
+        </header>
+        
+        <div class="slide-body">
+          <div class="layout-split">
+            <div class="layout-split-left">
+              <ul class="bullet-list">
+                <li class="bullet-item">
+                  <span class="bullet-dot blue"></span>
+                  <div class="bullet-content">
+  <span class="bullet-title">Gestion des Utilisateurs</span>
+  <span class="bullet-desc">
+    Un <strong>L'entité AppUser représente les utilisateurs de l'application. Chaque utilisateur possède un panier unique (Cart) et peut échanger plusieurs messages (ChatMessage) via une relation 1 à N.</strong>
+  </span>
+</div>
+</li>
+
+<li class="bullet-item">
+  <span class="bullet-dot purple"></span>
+  <div class="bullet-content">
+    <span class="bullet-title">Gestion du Panier et des Commandes</span>
+    <span class="bullet-desc">
+      <strong>Le panier (Cart) contient plusieurs CartItem, chacun étant associé à un Product. Cette structure permet à l'utilisateur de gérer les produits sélectionnés avant l'achat.
+
+Lors de la validation du panier, une commande (Order) est créée. Celle-ci regroupe plusieurs OrderItem représentant les produits commandés. </strong></span>
+  </div>
+</li>
+
+<li class="bullet-item">
+  <span class="bullet-dot cyan"></span>
+  <div class="bullet-content">
+    <span class="bullet-title">Gestion des Paiements et Cohérence des Données</span>
+    <span class="bullet-desc">
+      Chaque <strong>Order</strong> est associée à un unique <strong>Payment (1..1)</strong>, garantissant le suivi des transactions. Des énumérations telles que <strong>UserRole</strong>, <strong>OrderStatus</strong> et <strong>PaymentStatus</strong> assurent la cohérence et la fiabilité du système.
+    </span>
+  </div>
+</li>
+              </ul>
+            </div>
+            
+            <div class="layout-split-right">
+              <div class="diagram-container" data-diagram="class" title="Cliquer pour zoomer">
+                <img src="les digramme/diagrammeDeclass.png" alt="Diagramme de classes UML">
+                <div class="diagram-overlay">
+                  <div class="zoom-icon-btn"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                  Zoomer sur le diagramme
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 8 : UML - SEQUENCE CONNEXION -->
+    <section class="slide" id="slide-7">
+      <div class="slide-content">
+        <header class="slide-header">
+          <div class="slide-title-group">
+            <span class="slide-category">Modélisation UML - Dynamique</span>
+            <h2 class="slide-title">Authentification & Interception de Session</h2>
+          </div>
+          <span class="slide-number">08 / 17</span>
+        </header>
+        
+        <div class="slide-body">
+          <div class="layout-split">
+            <div class="layout-split-left">
+              <ul class="bullet-list">
+                <li class="bullet-item">
+                  <span class="bullet-dot blue"></span>
+          <div class="bullet-content">
+  <span class="bullet-title">Authentification et Sécurisation</span>
+  <span class="bullet-desc">
+    L’utilisateur s’authentifie via l’interface React en envoyant ses identifiants au backend Spring Boot. Une fois validé, un jeton d’authentification est généré et renvoyé au client pour sécuriser les échanges.
+  </span>
+</div>
+</li>
+
+<li class="bullet-item">
+  <span class="bullet-dot purple"></span>
+  <div class="bullet-content">
+    <span class="bullet-title">Gestion de session</span>
+    <span class="bullet-desc">
+      Le jeton ainsi que les informations du profil utilisateur sont stockés côté client afin de maintenir la session active et garantir une expérience fluide sur toute l’application.
+    </span>
+  </div>
+</li>
+
+<li class="bullet-item">
+  <span class="bullet-dot cyan"></span>
+  <div class="bullet-content">
+    <span class="bullet-title">Sécurisation des requêtes</span>
+    <span class="bullet-desc">
+      Chaque requête HTTP envoyée au backend inclut automatiquement le jeton d’authentification grâce à un intercepteur Axios, permettant de contrôler les accès et sécuriser les ressources.
+    </span>
+  </div>
+</li>
+              </ul>
+            </div>
+            
+            <div class="layout-split-right">
+              <div class="diagram-container" data-diagram="seq_auth" title="Cliquer pour zoomer">
+                <img src="les digramme/diagrammeDeSequenceAuthentificationetInterception.png" alt="Diagramme de séquence authentification">
+                <div class="diagram-overlay">
+                  <div class="zoom-icon-btn"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                  Zoomer sur le diagramme
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 9 : UML - SEQUENCE ACHAT -->
+    <section class="slide" id="slide-8">
+      <div class="slide-content">
+        <header class="slide-header">
+          <div class="slide-title-group">
+            <span class="slide-category">Modélisation UML - Dynamique</span>
+            <h2 class="slide-title">Processus de Commande & Paiement</h2>
+          </div>
+          <span class="slide-number">09 / 17</span>
+        </header>
+        
+        <div class="slide-body">
+          <div class="layout-split">
+            <div class="layout-split-left">
+              <ul class="bullet-list">
+                <span class="bullet-dot purple"></span>
+                <div class="bullet-content">
+                 
+  <span class="bullet-title">Validation et habilitation</span>
+  <span class="bullet-desc">
+    Lors du checkout, le backend vérifie l’identité de l’utilisateur en analysant les headers HTTP afin de s’assurer que la requête est autorisée.
+  </span>
+</div>
+</li>
+
+<li class="bullet-item">
+  <span class="bullet-dot purple"></span>
+  <div class="bullet-content">
+    <span class="bullet-title">Calcul métier et paiement</span>
+    <span class="bullet-desc">
+      Le service récupère le panier depuis la base de données, calcule le montant total et interagit avec un simulateur de paiement externe pour valider la transaction.
+    </span>
+  </div>
+</li>
+
+<li class="bullet-item">
+  <span class="bullet-dot cyan"></span>
+  <div class="bullet-content">
+    <span class="bullet-title">Finalisation de la commande</span>
+    <span class="bullet-desc">
+      Après validation du paiement, le système met à jour le stock, crée la commande en base de données, vide le panier et renvoie un numéro de commande unique au client.
+    </span>
+  </div>
+</li>
+              </ul>
+            </div>
+            
+            <div class="layout-split-right">
+              <div class="diagram-container" data-diagram="seq_order" title="Cliquer pour zoomer">
+                <img src="les digramme/diagrammeDeSequenceCommandePaiement.png" alt="Diagramme de séquence commande et paiement">
+                <div class="diagram-overlay">
+                  <div class="zoom-icon-btn"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                  Zoomer sur le diagramme
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 10 : UML - SEQUENCE CHATBOT -->
+    <section class="slide" id="slide-9">
+      <div class="slide-content">
+        <header class="slide-header">
+          <div class="slide-title-group">
+            <span class="slide-category">Modélisation UML - Dynamique</span>
+            <h2 class="slide-title">Assistant Conversationnel (Chatbot)</h2>
+          </div>
+          <span class="slide-number">10 / 17</span>
+        </header>
+        
+<li class="bullet-item">
+  <span class="bullet-dot purple"></span>
+        <div class="slide-body">
+          <div class="layout-split">
+            <div class="layout-split-left">
+              <ul class="bullet-list">
+                <div class="bullet-content">
+  <span class="bullet-title">Réactivité instantanée de l’interface</span>
+  <span class="bullet-desc">
+    Le message de l’utilisateur est affiché immédiatement dans l’interface, accompagné d’un indicateur de génération indiquant que l’assistant est en train d’écrire.
+  </span>
+</div>
+</li>
+
+<li class="bullet-item">
+  <span class="bullet-dot purple"></span>
+  <div class="bullet-content">
+    <span class="bullet-title">Optimisation du contexte LLM</span>
+    <span class="bullet-desc">
+      Le backend sauvegarde les messages et récupère l’historique de conversation, limité aux 20 derniers échanges afin d’optimiser les performances et réduire la latence.
+    </span>
+  </div>
+</li>
+
+<li class="bullet-item">
+  <span class="bullet-dot cyan"></span>
+  <div class="bullet-content">
+    <span class="bullet-title">Appel asynchrone et persistance</span>
+    <span class="bullet-desc">
+      Le backend envoie la requête à OpenRouter via WebClient (GPT-4o-mini), puis sauvegarde la réponse de l’IA en base de données avant de la renvoyer au client.
+    </span>
+  </div>
+</li>
+              </ul>
+            </div>
+            
+            <div class="layout-split-right">
+              <div class="diagram-container" data-diagram="seq_chat" title="Cliquer pour zoomer">
+                <img src="les digramme/diagrammeDesenquenceChatbotConversationne.png" alt="Diagramme de séquence chatbot">
+                <div class="diagram-overlay">
+                  <div class="zoom-icon-btn"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                  Zoomer sur le diagramme
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 11 : TECHNOLOGIES DU PROJET -->
+    <section class="slide" id="slide-10">
+      <div class="slide-content">
+        <header class="slide-header">
+          <div class="slide-title-group">
+            <span class="slide-category">Écosystème Logiciel</span>
+            <h2 class="slide-title">Technologies Utilisées</h2>
+          </div>
+          <span class="slide-number">11 / 17</span>
+        </header>
+        
+        <div class="slide-body" style="overflow-y: auto;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; flex: 1;">
+            
+            <!-- Colonne 1: Frontend -->
+            <div>
+              <h3 class="tech-section-title"><i class="fa-brands fa-react t-react"></i> Partie Front-End</h3>
+              <div class="tech-grid">
+                <div class="tech-mini-card">
+                  <div class="tech-logo t-react"><i class="fa-brands fa-react"></i></div>
+                  <span class="tech-name">ReactJS</span>
+                  <span class="tech-desc">Interface dynamique</span>
+                </div>
+                <div class="tech-mini-card">
+                  <div class="tech-logo t-vite"><i class="fa-solid fa-bolt"></i></div>
+                  <span class="tech-name">Vite</span>
+                  <span class="tech-desc">Build & Bundler</span>
+                </div>
+                <div class="tech-mini-card">
+                  <div class="tech-logo t-axios"><i class="fa-solid fa-exchange-alt"></i></div>
+                  <span class="tech-name">Axios</span>
+                  <span class="tech-desc">Requêtes HTTP</span>
+                </div>
+                <div class="tech-mini-card">
+                  <div class="tech-logo t-bootstrap"><i class="fa-brands fa-bootstrap"></i></div>
+                  <span class="tech-name">Bootstrap</span>
+                  <span class="tech-desc">Mise en page responsive</span>
+                </div>
+              </div>
+              
+              <h3 class="tech-section-title"><i class="fa-solid fa-brain t-openrouter"></i> Intégration Intelligence Artificielle</h3>
+              <div class="tech-grid" style="grid-template-columns: 1fr 1fr;">
+                <div class="tech-mini-card">
+                  <div class="tech-logo t-openrouter"><i class="fa-solid fa-network-wired"></i></div>
+                  <span class="tech-name">OpenRouter API</span>
+                  <span class="tech-desc">Hub d'accès unifié aux LLM</span>
+                </div>
+                <div class="tech-mini-card">
+                  <div class="tech-logo t-openrouter"><i class="fa-solid fa-microchip"></i></div>
+                  <span class="tech-name">GPT-4o-Mini</span>
+                  <span class="tech-desc">Modèle IA rapide et optimal</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Colonne 2: Backend & Base de données -->
+            <div>
+              <h3 class="tech-section-title"><i class="fa-solid fa-gears t-spring"></i> Partie Back-End</h3>
+              <div class="tech-grid">
+                <div class="tech-mini-card">
+                  <div class="tech-logo t-java"><i class="fa-brands fa-java"></i></div>
+                  <span class="tech-name">Java 17+</span>
+                  <span class="tech-desc">Langage compilé robuste</span>
+                </div>
+                <div class="tech-mini-card">
+                  <div class="tech-logo t-spring"><i class="fa-solid fa-leaf"></i></div>
+                  <span class="tech-name">Spring Boot 3</span>
+                  <span class="tech-desc">API REST Stateless</span>
+                </div>
+                <div class="tech-mini-card">
+                  <div class="tech-logo t-spring"><i class="fa-solid fa-database"></i></div>
+                  <span class="tech-name">Spring JPA</span>
+                  <span class="tech-desc">Persistance Hibernate</span>
+                </div>
+                <div class="tech-mini-card">
+                  <div class="tech-logo t-h2"><i class="fa-solid fa-memory"></i></div>
+                  <span class="tech-name">H2 Database</span>
+                  <span class="tech-desc">Base SQL en mémoire</span>
+                </div>
+              </div>
+              
+              <h3 class="tech-section-title"><i class="fa-solid fa-screwdriver-wrench t-git"></i> Outils de Développement</h3>
+              <div class="tech-grid" style="grid-template-columns: 1fr 1fr;">
+                <div class="tech-mini-card">
+                  <div class="tech-logo t-maven"><i class="fa-solid fa-box-open"></i></div>
+                  <span class="tech-name">Maven</span>
+                  <span class="tech-desc">Gestionnaire backend</span>
+                </div>
+                <div class="tech-mini-card">
+                  <div class="tech-logo t-git"><i class="fa-brands fa-git-alt"></i></div>
+                  <span class="tech-name">Git</span>
+                  <span class="tech-desc">Contrôle de version</span>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 12 : FONCTIONNALITE 1 -->
+    <section class="slide" id="slide-11">
+      <div class="slide-content">
+        <header class="slide-header">
+          <div class="slide-title-group">
+            <span class="slide-category">Fonctionnalités Principales</span>
+            <h2 class="slide-title">Catalogue Dynamique & Recherche Multicritère</h2>
+          </div>
+          <span class="slide-number">12 / 17</span>
+        </header>
+        
+        <div class="slide-body">
+          <div class="layout-split">
+            <div class="layout-split-left">
+              <ul class="bullet-list">
+                <li class="bullet-item">
+                  <span class="bullet-dot blue"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">Affichage des produits en temps réel</span>
+                    <span class="bullet-desc">Le client consulte une grille responsive de produits, alimentée de façon asynchrone par le contrôleur `/products` du backend Spring Boot.</span>
+                  </div>
+                </li>
+                <li class="bullet-item">
+                  <span class="bullet-dot purple"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">Filtrage et Recherche instantanée</span>
+                    <span class="bullet-desc">Recherche textuelle par mot-clé, et filtrage par catégorie ou par marque, mis à jour dynamiquement dans l'état (state) de l'application React.</span>
+                  </div>
+                </li>
+                <li class="bullet-item">
+                  <span class="bullet-dot green"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">Fiche produit détaillée</span>
+                    <span class="bullet-desc">Page dédiée à chaque produit avec affichage de sa disponibilité en stock, son prix avec sa devise, et sa date de sortie.</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            
+            <div class="layout-split-right">
+              <div class="glass-card glow-blue" style="width: 100%;">
+                <h3 class="card-title"><i class="fa-solid fa-code"></i> REST API : Produits</h3>
+                <p class="card-text">Structure d'appel du contrôleur produit :</p>
+                <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; font-family: var(--font-mono); font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.05); color: #cbd5e1; display: flex; flex-direction: column; gap: 8px;">
+                  <div><span style="color: var(--color-green);">GET</span> /api/products</div>
+                  <div style="color: var(--text-muted); padding-left: 15px;">→ Récupère tous les produits</div>
+                  <div><span style="color: var(--color-green);">GET</span> /api/product/{id}</div>
+                  <div style="color: var(--text-muted); padding-left: 15px;">→ Détails du produit</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 13 : FONCTIONNALITE 2 -->
+    <section class="slide" id="slide-12">
+      <div class="slide-content">
+        <header class="slide-header">
+          <div class="slide-title-group">
+            <span class="slide-category">Fonctionnalités Principales</span>
+            <h2 class="slide-title">Gestion du Panier & Processus d'Achat</h2>
+          </div>
+          <span class="slide-number">13 / 17</span>
+        </header>
+        
+        <div class="slide-body">
+          <div class="layout-split">
+            <div class="layout-split-left">
+              <ul class="bullet-list">
+                <li class="bullet-item">
+                  <span class="bullet-dot blue"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">Panier Persistant</span>
+                    <span class="bullet-desc">Ajout d'articles au panier avec persistance. Chaque panier possède un identifiant unique lié au compte utilisateur ou à sa session.</span>
+                  </div>
+                </li>
+                <li class="bullet-item">
+                  <span class="bullet-dot purple"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">Calcul Automatique des Totaux</span>
+                    <span class="bullet-desc">Mise à jour en temps réel des quantités, calcul automatique des totaux de lignes et du montant global du panier.</span>
+                  </div>
+                </li>
+                <li class="bullet-item">
+                  <span class="bullet-dot green"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">Checkout & Paiement Sécurisé</span>
+                    <span class="bullet-desc">Formulaire d'adresse de livraison et intégration d'un simulateur de transaction bancaire (PayPal/Carte de crédit) avec retour visuel immédiat.</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            
+            <div class="layout-split-right">
+              <div class="glass-card glow-purple" style="width: 100%; text-align: center;">
+                <div class="card-icon" style="margin: 0 auto 10px; color: var(--color-purple);"><i class="fa-solid fa-cart-shopping"></i></div>
+                <h3 class="card-title">Flux Transactionnel</h3>
+                <p class="card-text">L'approbation du paiement externe déclenche de manière atomique la validation de la commande en base, l'ajustement du stock des produits et le nettoyage du panier client.</p>
+                <div class="badge-group" style="justify-content: center; margin-top: 10px;">
+                  <span class="tech-badge purple">Validation Stock</span>
+                  <span class="tech-badge blue">PayPal SDK</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 14 : FONCTIONNALITE 3 -->
+    <section class="slide" id="slide-13">
+      <div class="slide-content">
+        <header class="slide-header">
+          <div class="slide-title-group">
+            <span class="slide-category">Fonctionnalités Principales</span>
+            <h2 class="slide-title">Chatbot Assistant IA Flottant</h2>
+          </div>
+          <span class="slide-number">14 / 17</span>
+        </header>
+        
+        <div class="slide-body">
+          <div class="layout-split">
+            <div class="layout-split-left">
+              <ul class="bullet-list">
+                <li class="bullet-item">
+                  <span class="bullet-dot blue"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">Bouton Flottant Global</span>
+                    <span class="bullet-desc">Fenêtre de discussion accessible à tout moment depuis le coin inférieur droit de l'application, avec un effet verre dépoli (glassmorphism) moderne et ergonomique.</span>
+                  </div>
+                </li>
+                <li class="bullet-item">
+                  <span class="bullet-dot purple"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">Conversation continue et contextualisée</span>
+                    <span class="bullet-desc">L'historique conversationnel persistant en base H2 permet à l'IA d'adapter ses réponses au fil de la discussion. L'utilisateur peut aussi réinitialiser et purger l'historique d'un clic.</span>
+                  </div>
+                </li>
+                <li class="bullet-item">
+                  <span class="bullet-dot cyan"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">Indicateur d'écriture dynamique</span>
+                    <span class="bullet-desc">Animation de points de suspension simulant une écriture humaine en temps réel pendant le chargement des réponses de l'IA.</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            
+            <div class="layout-split-right">
+              <div class="glass-card glow-cyan" style="width: 100%;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                  <div class="card-icon" style="width: 36px; height: 36px; font-size: 1rem;"><i class="fa-solid fa-robot"></i></div>
+                  <h4 class="card-title" style="font-size: 1rem;">Exemple de Prompt Système</h4>
+                </div>
+                <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; font-family: var(--font-sans); font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.05); color: #94a3b8; line-height: 1.5;">
+                  <em>"Tu es l'assistant de DigiTech, boutique e-commerce. Tu réponds poliment en français. La livraison prend 2 à 5 jours au Maroc. Les modes de paiement acceptés sont PayPal et carte de crédit. Ne conseille l'utilisateur que sur les produits de la boutique..."</em>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 15 : FONCTIONNALITE 4 -->
+    <section class="slide" id="slide-14">
+      <div class="slide-content">
+        <header class="slide-header">
+          <div class="slide-title-group">
+            <span class="slide-category">Fonctionnalités Principales</span>
+            <h2 class="slide-title">Espace Administration & Gestion CRUD</h2>
+          </div>
+          <span class="slide-number">15 / 17</span>
+        </header>
+        
+        <div class="slide-body">
+          <div class="layout-split">
+            <div class="layout-split-left">
+              <ul class="bullet-list">
+                <li class="bullet-item">
+                  <span class="bullet-dot blue"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">Espace d'Administration Restreint</span>
+                    <span class="bullet-desc">Un panneau d'administration sécurisé, uniquement accessible aux utilisateurs disposant du rôle `ADMIN`.</span>
+                  </div>
+                </li>
+                <li class="bullet-item">
+                  <span class="bullet-dot purple"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">Opérations CRUD sur le Catalogue</span>
+                    <span class="bullet-desc">L'administrateur peut ajouter de nouveaux produits, modifier les tarifs, les catégories ou les descriptions, et supprimer des articles.</span>
+                  </div>
+                </li>
+                <li class="bullet-item">
+                  <span class="bullet-dot green"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">Upload d'Images et Stocks</span>
+                    <span class="bullet-desc">Prise en charge du chargement d'images de produits sous forme de tableau de bytes (`byte[]` persistant en base) et gestion en temps réel de la quantité disponible en stock.</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            
+            <div class="layout-split-right">
+              <div class="glass-card glow-green" style="width: 100%;">
+                <h3 class="card-title"><i class="fa-solid fa-lock"></i> Administration API</h3>
+                <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; font-family: var(--font-mono); font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.05); color: #cbd5e1; display: flex; flex-direction: column; gap: 8px;">
+                  <div><span style="color: #60a5fa;">POST</span> /api/products</div>
+                  <div style="color: var(--text-muted); padding-left: 15px;">→ Ajouter un produit + Image (Admin)</div>
+                  <div><span style="color: #fbbf24;">PUT</span> /api/product/{id}</div>
+                  <div style="color: var(--text-muted); padding-left: 15px;">→ Mettre à jour produit (Admin)</div>
+                  <div><span style="color: #ef4444;">DELETE</span> /api/product/{id}</div>
+                  <div style="color: var(--text-muted); padding-left: 15px;">→ Supprimer un produit (Admin)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 16 : CONCLUSION -->
+<section class="slide" id="slide-15">
+  <div class="slide-content">
+
+    <header class="slide-header">
+      <div class="slide-title-group">
+        <span class="slide-category">Bilan du Projet</span>
+        <h2 class="slide-title">Conclusion</h2>
+      </div>
+      <span class="slide-number">16 / 17</span>
+    </header>
+
+    <div class="slide-body">
+
+      <!-- BULLETS À GAUCHE -->
+      <div class="bullet-list">
+        <ul style="gap: 10px;">
+          <li class="bullet-item">
+            <span class="bullet-dot blue"></span>
+            <span class="bullet-desc">Backend Spring Boot 3 performant couplé à React.</span>
+          </li>
+
+          <li class="bullet-item">
+            <span class="bullet-dot blue"></span>
+            <span class="bullet-desc">Chatbot IA réactif avec historique persistant en base H2.</span>
+          </li>
+
+          <li class="bullet-item">
+            <span class="bullet-dot blue"></span>
+            <span class="bullet-desc">Filtrage par intercepteur sécurisé et isolation du chat.</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- CARD CENTRÉE -->
+      <div class="glass-card glow-blue" style="margin: 0 auto;">
+        <h3 class="card-title">
+          <i class="fa-solid fa-check-double text-blue"></i> Résultats Obtenus
+        </h3>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+    <!-- SLIDE 17 : PERSPECTIVES D'AMELIORATION -->
+    <section class="slide" id="slide-16">
+      <div class="slide-content">
+        <header class="slide-header">
+          <div class="slide-title-group">
+            <span class="slide-category">Évolutions Futures</span>
+            <h2 class="slide-title">Perspectives d'Amélioration</h2>
+          </div>
+          <span class="slide-number">17 / 17</span>
+        </header>
+        
+        <div class="slide-body" >
+          <div class="layout-split">
+            <div class="layout-split-left">
+              <ul class="bullet-list">
+                <li class="bullet-item">
+            
+                  <span class="bullet-dot blue"></span>
+                  <div class="bullet-content" style="gap: 8px;">
+                    <span class="bullet-title">1. Actions Transactionnelles via Chatbot (Function Calling)</span>
+                    <span class="bullet-desc">Permettre à l'IA d'interagir directement avec la base de données de la boutique pour vérifier le statut d'une commande ou ajouter un article au panier sur simple demande textuelle de l'utilisateur.</span>
+                  </div>
+                </li>
+                <li class="bullet-item">
+                  <span class="bullet-dot purple"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">2. Recommandations Prédictives</span>
+                    <span class="bullet-desc">Intégrer un modèle de recommandation analysant l'historique d'achat ou de navigation du client pour proposer des produits ciblés au fil de sa discussion avec le chatbot.</span>
+                  </div>
+                </li>
+                <li class="bullet-item">
+                  <span class="bullet-dot green"></span>
+                  <div class="bullet-content">
+                    <span class="bullet-title">3. Chatbot Vocal et Multilingue</span>
+                    <span class="bullet-desc">Prendre en charge la reconnaissance vocale et étendre le dictionnaire de l'assistant aux dialectes locaux (ex: Darija marocaine) pour élargir le public cible.</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            
+            <div class="layout-split-right">
+              <div class="glass-card glow-green" style="text-align: center; width: 100%;">
+                <div class="card-icon" style="margin: 0 auto 15px; color: var(--color-green);"><i class="fa-solid fa-compass"></i></div>
+                <h3 class="card-title">Vers l'Agent E-Commerce</h3>
+                <p class="card-text">La transition d'un simple chatbot informatif vers un agent e-commerce autonome capable d'exécuter des actions sécurisées pour le compte de l'utilisateur.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- CONTROLS & UTILITIES -->
+
+  <!-- Keyboard hints help info -->
+  <div class="keyboard-hint">
+    <span>Navigation :</span>
+    <kbd class="key-badge">←</kbd>
+    <kbd class="key-badge">→</kbd>
+    <span>ou</span>
+    <kbd class="key-badge">Espace</kbd>
+  </div>
+
+  <!-- Bottom Navigation Buttons -->
+  <div class="navigation-controls">
+    <button id="prevBtn" class="nav-btn" aria-label="Slide précédente" title="Précédent (Fleche Gauche)">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <button id="nextBtn" class="nav-btn" aria-label="Slide suivante" title="Suivant (Fleche Droite / Espace)">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <!-- Slide Progress Bar -->
+  <div class="progress-bar-container">
+    <div id="progressBar" class="progress-bar"></div>
+  </div>
+
+  <!-- INTERACTIVE LIGHTBOX FOR UML DIAGRAM ZOOM -->
+  <div id="umlLightbox" class="lightbox" aria-modal="true" role="dialog">
+    <button id="lightboxClose" class="lightbox-close-btn" aria-label="Fermer le zoom">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    
+    <div class="lightbox-caption">
+      <h3 id="lightboxTitle" class="lightbox-title">Nom du Diagramme</h3>
+      <p id="lightboxDesc" class="lightbox-desc">Explication de flux...</p>
+    </div>
+    
+    <div class="lightbox-view">
+      <div id="lightboxImgWrapper" class="lightbox-img-wrapper">
+        <img id="lightboxImage" class="lightbox-image" src="" alt="Diagramme zoomé">
+      </div>
+    </div>
+    
+    <div class="lightbox-controls">
+      <button id="zoomOutBtn" class="lightbox-ctrl-btn" title="Zoom arrière"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+      <span id="zoomIndicator" class="lightbox-zoom-indicator">100%</span>
+      <button id="zoomInBtn" class="lightbox-ctrl-btn" title="Zoom avant"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+      <button id="zoomResetBtn" class="lightbox-ctrl-btn" title="Réinitialiser la vue"><i class="fa-solid fa-arrows-rotate"></i></button>
+    </div>
+    
+    <div class="lightbox-drag-hint">
+      <i class="fa-solid fa-hand-pointer"></i> Faites glisser pour déplacer le diagramme zoomé
+    </div>
+  </div>
+
+  <!-- Scripts CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  
+  <!-- Custom JavaScript Logic -->
+  <script src="script.js"></script>
+</body>
+</html>

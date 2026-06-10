@@ -195,10 +195,101 @@ public class DataSeeder {
         product.setStockQuantity(stockQuantity);
         product.setProductAvailable(available);
         product.setReleaseDate(Date.valueOf(LocalDate.of(year, month, day)));
-        product.setImageName(null);
-        product.setImageType(null);
-        product.setImageDate(null);
+        product.setImageName(name.toLowerCase().replaceAll("[^a-z0-9]", "_") + ".png");
+        product.setImageType("image/png");
+        product.setImageDate(generatePlaceholderImage(name, category));
         return product;
+    }
+
+    private byte[] generatePlaceholderImage(String productName, String category) {
+        try {
+            System.setProperty("java.awt.headless", "true");
+            int width = 400;
+            int height = 300;
+            java.awt.image.BufferedImage image = new java.awt.image.BufferedImage(width, height, java.awt.image.BufferedImage.TYPE_INT_RGB);
+            java.awt.Graphics2D g = image.createGraphics();
+
+            // Activer l'anti-aliasing pour des textes lisses
+            g.setRenderingHint(java.awt.RenderingHints.KEY_TEXT_ANTIALIASING, java.awt.RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+
+            // Palette de couleurs premium par catégorie
+            java.awt.Color bgColor;
+            switch (category.toLowerCase()) {
+                case "laptop":
+                    bgColor = new java.awt.Color(79, 70, 229); // Indigo
+                    break;
+                case "mobile":
+                    bgColor = new java.awt.Color(59, 130, 246); // Blue
+                    break;
+                case "headphone":
+                    bgColor = new java.awt.Color(16, 185, 129); // Green
+                    break;
+                case "tablet":
+                    bgColor = new java.awt.Color(236, 72, 153); // Pink
+                    break;
+                case "toys":
+                    bgColor = new java.awt.Color(245, 158, 11); // Orange
+                    break;
+                case "fashion":
+                    bgColor = new java.awt.Color(99, 102, 241); // Violet
+                    break;
+                default:
+                    bgColor = new java.awt.Color(107, 114, 128); // Gray
+                    break;
+            }
+
+            // Remplir le fond
+            g.setColor(bgColor);
+            g.fillRect(0, 0, width, height);
+
+            // Grille de design subtile
+            g.setColor(new java.awt.Color(255, 255, 255, 20));
+            for (int i = 0; i < width; i += 20) {
+                g.drawLine(i, 0, i, height);
+            }
+            for (int i = 0; i < height; i += 20) {
+                g.drawLine(0, i, width, i);
+            }
+
+            // Encadré sombre
+            g.setColor(new java.awt.Color(0, 0, 0, 40));
+            g.fillRoundRect(20, 20, width - 40, height - 40, 15, 15);
+
+            // Icône stylisée ou texte géant d'arrière-plan
+            g.setColor(new java.awt.Color(255, 255, 255, 15));
+            g.setFont(new java.awt.Font("sans-serif", java.awt.Font.BOLD, 120));
+            g.drawString(category.substring(0, Math.min(category.length(), 2)).toUpperCase(), 40, 200);
+
+            // Nom du produit principal
+            g.setColor(java.awt.Color.WHITE);
+            g.setFont(new java.awt.Font("sans-serif", java.awt.Font.BOLD, 22));
+            java.awt.FontMetrics fm = g.getFontMetrics();
+            int nameX = (width - fm.stringWidth(productName)) / 2;
+            g.drawString(productName, nameX, 140);
+
+            // Badge de catégorie
+            g.setFont(new java.awt.Font("sans-serif", java.awt.Font.PLAIN, 14));
+            fm = g.getFontMetrics();
+            String label = "Collection : " + category;
+            int labelX = (width - fm.stringWidth(label)) / 2;
+            g.drawString(label, labelX, 185);
+
+            g.dispose();
+
+            java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
+            javax.imageio.ImageIO.write(image, "png", baos);
+            return baos.toByteArray();
+        } catch (Exception e) {
+            // Fallback transparent 1x1 PNG si problème d'environnement
+            return new byte[] {
+                (byte) 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, 0x00, 0x00, 0x00, 0x0D, 0x49, 0x48, 0x44, 0x52,
+                0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x08, 0x06, 0x00, 0x00, 0x00, 0x1F, 0x15, (byte) 0xC4,
+                (byte) 0x89, 0x00, 0x00, 0x00, 0x0D, 0x49, 0x44, 0x41, 0x54, 0x78, (byte) 0x9C, 0x63, 0x00, 0x01, 0x00,
+                0x00, 0x05, 0x00, 0x01, 0x0D, 0x0A, 0x2D, (byte) 0xB4, 0x00, 0x00, 0x00, 0x00, 0x49, 0x45, 0x4E, 0x44,
+                (byte) 0xAE, 0x42, 0x60, (byte) 0x82
+            };
+        }
     }
 
     private CartItem cartItem(Cart cart, Product product, int quantity) {
@@ -219,3 +310,4 @@ public class DataSeeder {
         return item;
     }
 }
+

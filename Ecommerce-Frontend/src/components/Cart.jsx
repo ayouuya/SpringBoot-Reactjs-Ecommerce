@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import AppContext from "../Context/Context";
 import AuthContext from "../Context/AuthContext";
 import CheckoutPopup from "./CheckoutPopup";
-import API from "../axios";
 import { formatCurrency } from "../utils/formatCurrency";
+import unplugged from "../assets/unplugged.png";
 
 const Cart = () => {
   const {
@@ -21,30 +21,7 @@ const Cart = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    const attachImages = async () => {
-      if (!cart.items || cart.items.length === 0) {
-        setCartItems([]);
-        return;
-      }
-
-      const itemsWithImages = await Promise.all(
-        cart.items.map(async (item) => {
-          try {
-            const response = await API.get(`/product/${item.productId}/image`, {
-              responseType: "blob",
-            });
-            const imageUrl = URL.createObjectURL(response.data);
-            return { ...item, imageUrl };
-          } catch (error) {
-            return { ...item, imageUrl: "" };
-          }
-        })
-      );
-
-      setCartItems(itemsWithImages);
-    };
-
-    attachImages();
+    setCartItems(cart.items || []);
   }, [cart.items]);
 
   const handleIncreaseQuantity = async (item) => {
@@ -125,7 +102,14 @@ const Cart = () => {
               <div key={item.productId} className="cart-item">
                 <div className="cart-item-image">
                   {item.imageUrl ? (
-                    <img src={item.imageUrl} alt={item.name} />
+                    <img
+                      src={item.imageUrl}
+                      alt={item.name}
+                      onError={(event) => {
+                        event.currentTarget.onerror = null;
+                        event.currentTarget.src = unplugged;
+                      }}
+                    />
                   ) : (
                     <div className="image-placeholder">No image</div>
                   )}

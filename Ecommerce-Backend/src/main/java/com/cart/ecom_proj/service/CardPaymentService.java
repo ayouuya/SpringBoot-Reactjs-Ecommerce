@@ -24,6 +24,9 @@ public class CardPaymentService implements PaymentService {
         if (card == null) {
             return new PaymentResult(PaymentStatus.DECLINED, null, "Card details are required.");
         }
+        if (card.cardHolder() == null || card.cardHolder().isBlank()) {
+            return new PaymentResult(PaymentStatus.DECLINED, null, "Card holder is required.");
+        }
 
         String number = normalizeCardNumber(card.cardNumber());
         if (number.isEmpty() || number.length() < 13 || number.length() > 19) {
@@ -35,7 +38,7 @@ public class CardPaymentService implements PaymentService {
         }
 
         if (!isValidExpiry(card.expiryMonth(), card.expiryYear())) {
-            return new PaymentResult(PaymentStatus.DECLINED, null, "Card is expired.");
+            return new PaymentResult(PaymentStatus.DECLINED, null, "Card expiry date is invalid or expired.");
         }
 
         if (!isValidCvv(card.cvv())) {
@@ -58,7 +61,7 @@ public class CardPaymentService implements PaymentService {
             return false;
         }
         String trimmed = cvv.trim();
-        return trimmed.length() == 3 || trimmed.length() == 4;
+        return trimmed.matches("\\d{3,4}");
     }
 
     private boolean isValidExpiry(String monthValue, String yearValue) {

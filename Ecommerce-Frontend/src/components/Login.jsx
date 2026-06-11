@@ -1,13 +1,13 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../Context/AuthContext";
+import { getApiErrorMessage } from "../axios";
 
 const Login = () => {
   const { login } = useContext(AuthContext);
   const [form, setForm] = useState({
-    fullName: "",
     email: "",
-    role: "USER",
+    password: "",
   });
   const [status, setStatus] = useState({ type: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -24,6 +24,10 @@ const Login = () => {
       setStatus({ type: "error", message: "Email is required." });
       return;
     }
+    if (!form.password) {
+      setStatus({ type: "error", message: "Password is required." });
+      return;
+    }
 
     try {
       setIsSubmitting(true);
@@ -35,8 +39,10 @@ const Login = () => {
         navigate("/", { replace: true });
       }
     } catch (error) {
-      const message = error?.response?.data || error.message;
-      setStatus({ type: "error", message: message || "Login failed." });
+      setStatus({
+        type: "error",
+        message: getApiErrorMessage(error, "Login failed."),
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -46,18 +52,11 @@ const Login = () => {
     <div className="login-page">
       <div className="login-card">
         <h2>Sign In</h2>
-        <p>Use your role to enter the DIGITECH platform.</p>
+        <p>Sign in with your DIGITECH account.</p>
         {status.message && (
           <div className={`status-banner ${status.type}`}>{status.message}</div>
         )}
         <form onSubmit={handleSubmit} className="login-form">
-          <input
-            type="text"
-            name="fullName"
-            value={form.fullName}
-            onChange={handleChange}
-            placeholder="Full name"
-          />
           <input
             type="email"
             name="email"
@@ -66,14 +65,21 @@ const Login = () => {
             placeholder="Email"
             required
           />
-          <select name="role" value={form.role} onChange={handleChange}>
-            <option value="USER">User</option>
-            <option value="ADMIN">Admin</option>
-          </select>
+          <input
+            type="password"
+            name="password"
+            value={form.password}
+            onChange={handleChange}
+            placeholder="Password"
+            required
+          />
           <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
             {isSubmitting ? "Signing in..." : "Login"}
           </button>
         </form>
+        <small style={{ display: "block", marginTop: "1rem", opacity: 0.8 }}>
+          Demo accounts: sara@digitech.ma / User@12345 or admin@digitech.ma / Admin@12345
+        </small>
       </div>
     </div>
   );

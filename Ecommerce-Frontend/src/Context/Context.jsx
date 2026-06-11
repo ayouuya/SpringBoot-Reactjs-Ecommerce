@@ -1,4 +1,4 @@
-import API from "../axios";
+import API, { getApiErrorMessage } from "../axios";
 import { useState, useEffect, createContext, useCallback } from "react";
 
 const CART_KEY_STORAGE = "digitech.cartKey";
@@ -19,6 +19,25 @@ const ensureCartKey = () => {
   const newKey = createCartKey();
   localStorage.setItem(CART_KEY_STORAGE, newKey);
   return newKey;
+};
+
+const hasValidAuth = () => {
+  const stored = localStorage.getItem(AUTH_STORAGE_KEY);
+  if (!stored) {
+    return false;
+  }
+
+  try {
+    const auth = JSON.parse(stored);
+    if (!auth?.token) {
+      localStorage.removeItem(AUTH_STORAGE_KEY);
+      return false;
+    }
+    return true;
+  } catch (error) {
+    localStorage.removeItem(AUTH_STORAGE_KEY);
+    return false;
+  }
 };
 
 const defaultCart = {
@@ -56,13 +75,14 @@ export const AppProvider = ({ children }) => {
     try {
       const response = await API.get("/products");
       setData(response.data);
+      setIsError("");
     } catch (error) {
-      setIsError(error.message);
+      setIsError(getApiErrorMessage(error, "Unable to load products."));
     }
   }, []);
 
   const refreshCart = useCallback(async () => {
-    if (!localStorage.getItem(AUTH_STORAGE_KEY)) {
+    if (!hasValidAuth()) {
       setCart({ ...defaultCart, cartKey });
       return;
     }
@@ -71,7 +91,7 @@ export const AppProvider = ({ children }) => {
       const response = await API.get(`/cart/${cartKey}`);
       setCart(response.data);
     } catch (error) {
-      setIsError(error.message);
+      setIsError(getApiErrorMessage(error, "Unable to load cart."));
       setCart({ ...defaultCart, cartKey });
     } finally {
       setIsCartLoading(false);
@@ -90,7 +110,7 @@ export const AppProvider = ({ children }) => {
         });
         await refreshCart();
       } catch (error) {
-        setIsError(error?.response?.data || error.message);
+        setIsError(getApiErrorMessage(error, "Unable to add product to cart."));
       }
     },
     [cartKey, refreshCart]
@@ -102,7 +122,7 @@ export const AppProvider = ({ children }) => {
         await API.put(`/cart/${cartKey}/items/${productId}`, { quantity });
         await refreshCart();
       } catch (error) {
-        setIsError(error?.response?.data || error.message);
+        setIsError(getApiErrorMessage(error, "Unable to update cart item."));
       }
     },
     [cartKey, refreshCart]
@@ -114,7 +134,7 @@ export const AppProvider = ({ children }) => {
         await API.delete(`/cart/${cartKey}/items/${productId}`);
         await refreshCart();
       } catch (error) {
-        setIsError(error?.response?.data || error.message);
+        setIsError(getApiErrorMessage(error, "Unable to remove cart item."));
       }
     },
     [cartKey, refreshCart]
@@ -125,7 +145,7 @@ export const AppProvider = ({ children }) => {
       await API.delete(`/cart/${cartKey}`);
       await refreshCart();
     } catch (error) {
-      setIsError(error?.response?.data || error.message);
+      setIsError(getApiErrorMessage(error, "Unable to clear cart."));
     }
   }, [cartKey, refreshCart]);
 
@@ -142,7 +162,7 @@ export const AppProvider = ({ children }) => {
         await refreshCart();
         return response.data;
       } catch (error) {
-        const message = error?.response?.data?.message || error?.response?.data || error.message;
+        const message = getApiErrorMessage(error, "Checkout failed.");
         return {
           success: false,
           message,

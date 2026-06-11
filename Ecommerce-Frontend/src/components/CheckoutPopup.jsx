@@ -51,6 +51,40 @@ const CheckoutPopup = ({
     return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value);
   };
 
+  const normalizeCardNumber = (value) => value.replace(/\D/g, "");
+
+  const isLuhnValid = (value) => {
+    const number = normalizeCardNumber(value);
+    let sum = 0;
+    let doubleDigit = false;
+
+    for (let index = number.length - 1; index >= 0; index -= 1) {
+      let digit = Number(number[index]);
+      if (doubleDigit) {
+        digit *= 2;
+        if (digit > 9) {
+          digit -= 9;
+        }
+      }
+      sum += digit;
+      doubleDigit = !doubleDigit;
+    }
+
+    return sum % 10 === 0;
+  };
+
+  const isValidExpiry = (monthValue, yearValue) => {
+    const month = Number(monthValue);
+    const year = Number(yearValue.length === 2 ? `20${yearValue}` : yearValue);
+    if (!Number.isInteger(month) || month < 1 || month > 12 || !Number.isInteger(year)) {
+      return false;
+    }
+
+    const now = new Date();
+    const expiry = new Date(year, month, 0, 23, 59, 59);
+    return expiry >= now;
+  };
+
   const validateForm = () => {
     if (!customer.fullName || !customer.email || !customer.address) {
       return "Name, email, and address are required.";
@@ -62,6 +96,16 @@ const CheckoutPopup = ({
     if (paymentMethod === "CARD") {
       if (!card.cardHolder || !card.cardNumber || !card.expiryMonth || !card.expiryYear || !card.cvv) {
         return "Complete all card fields to continue.";
+      }
+      const cardNumber = normalizeCardNumber(card.cardNumber);
+      if (cardNumber.length < 13 || cardNumber.length > 19 || !isLuhnValid(cardNumber)) {
+        return "Invalid card number. For this demo, use 4242 4242 4242 4242.";
+      }
+      if (!isValidExpiry(card.expiryMonth, card.expiryYear)) {
+        return "Enter a valid future expiry date.";
+      }
+      if (!/^\d{3,4}$/.test(card.cvv.trim())) {
+        return "CVV must contain 3 or 4 digits.";
       }
     }
 
@@ -115,7 +159,8 @@ const CheckoutPopup = ({
                 type="email"
                 placeholder="Email"
                 value={customer.email}
-                onChange={(e) => setCustomer({ ...customer, email: e.target.value })}
+                readOnly
+                title="Checkout must use the email of the logged-in account."
               />
               <input
                 type="text"
@@ -167,26 +212,38 @@ const CheckoutPopup = ({
                   type="text"
                   placeholder="Card number"
                   value={card.cardNumber}
+                  inputMode="numeric"
+                  maxLength={23}
                   onChange={(e) => setCard({ ...card, cardNumber: e.target.value })}
                 />
                 <input
                   type="text"
                   placeholder="MM"
                   value={card.expiryMonth}
+                  inputMode="numeric"
+                  maxLength={2}
                   onChange={(e) => setCard({ ...card, expiryMonth: e.target.value })}
                 />
                 <input
                   type="text"
                   placeholder="YYYY"
                   value={card.expiryYear}
+                  inputMode="numeric"
+                  maxLength={4}
                   onChange={(e) => setCard({ ...card, expiryYear: e.target.value })}
                 />
                 <input
                   type="password"
                   placeholder="CVV"
                   value={card.cvv}
+                  inputMode="numeric"
+                  maxLength={4}
                   onChange={(e) => setCard({ ...card, cvv: e.target.value })}
                 />
+                <small>
+                  Demo card: 4242 4242 4242 4242, any future expiry date, and a
+                  3-digit CVV.
+                </small>
               </div>
             )}
 

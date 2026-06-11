@@ -24,6 +24,9 @@ const Navbar = ({ onSelectCategory }) => {
   useEffect(() => {
     if (!isAdmin) {
       fetchData();
+    } else {
+      setSearchResults([]);
+      setShowSearchResults(false);
     }
   }, [isAdmin]);
 

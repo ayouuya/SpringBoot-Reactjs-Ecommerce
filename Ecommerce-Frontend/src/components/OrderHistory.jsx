@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import API from "../axios";
+import API, { getApiErrorMessage } from "../axios";
 import { formatCurrency } from "../utils/formatCurrency";
 
 const OrderHistory = () => {
@@ -12,8 +12,10 @@ const OrderHistory = () => {
         const response = await API.get("/orders/my-orders");
         setOrders(response.data || []);
       } catch (error) {
-        const message = error?.response?.data || error.message;
-        setStatus({ type: "error", message: message || "Unable to load orders." });
+        setStatus({
+          type: "error",
+          message: getApiErrorMessage(error, "Unable to load orders."),
+        });
       }
     };
 

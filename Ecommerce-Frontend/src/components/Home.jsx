@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AppContext from "../Context/Context";
 import unplugged from "../assets/unplugged.png"
-import API from "../axios";
 import { formatCurrency } from "../utils/formatCurrency";
 import AuthContext from "../Context/AuthContext";
 
@@ -10,7 +9,6 @@ const Home = ({ selectedCategory }) => {
   const { data, isError, addToCart, refreshData } = useContext(AppContext);
   const { isUser } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [products, setProducts] = useState([]);
   const [isDataFetched, setIsDataFetched] = useState(false);
 
   useEffect(() => {
@@ -20,37 +18,9 @@ const Home = ({ selectedCategory }) => {
     }
   }, [refreshData, isDataFetched]);
 
-  useEffect(() => {
-    if (data && data.length > 0) {
-      const fetchImagesAndUpdateProducts = async () => {
-        const updatedProducts = await Promise.all(
-          data.map(async (product) => {
-            try {
-              const response = await API.get(`/product/${product.id}/image`, {
-                responseType: "blob",
-              });
-              const imageUrl = URL.createObjectURL(response.data);
-              return { ...product, imageUrl };
-            } catch (error) {
-              console.error(
-                "Error fetching image for product ID:",
-                product.id,
-                error
-              );
-              return { ...product, imageUrl: "placeholder-image-url" };
-            }
-          })
-        );
-        setProducts(updatedProducts);
-      };
-
-      fetchImagesAndUpdateProducts();
-    }
-  }, [data]);
-
   const filteredProducts = selectedCategory
-    ? products.filter((product) => product.category === selectedCategory)
-    : products;
+    ? data.filter((product) => product.category === selectedCategory)
+    : data;
 
   if (isError) {
     return (
@@ -108,8 +78,12 @@ const Home = ({ selectedCategory }) => {
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
                   <img
-                    src={imageUrl}
+                    src={imageUrl || unplugged}
                     alt={name}
+                    onError={(event) => {
+                      event.currentTarget.onerror = null;
+                      event.currentTarget.src = unplugged;
+                    }}
                     style={{
                       width: "100%",
                       height: "150px", 

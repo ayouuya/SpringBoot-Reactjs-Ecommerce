@@ -18,7 +18,12 @@ const readStoredUser = () => {
     return null;
   }
   try {
-    return JSON.parse(stored);
+    const auth = JSON.parse(stored);
+    if (!auth?.token) {
+      localStorage.removeItem(AUTH_STORAGE_KEY);
+      return null;
+    }
+    return auth;
   } catch (error) {
     localStorage.removeItem(AUTH_STORAGE_KEY);
     return null;
@@ -28,11 +33,10 @@ const readStoredUser = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => readStoredUser());
 
-  const login = useCallback(async ({ fullName, email, role }) => {
+  const login = useCallback(async ({ email, password }) => {
     const payload = {
-      fullName,
       email,
-      role: role ? role.toUpperCase() : "USER",
+      password,
     };
     const response = await API.post("/auth/login", payload);
     setUser(response.data);

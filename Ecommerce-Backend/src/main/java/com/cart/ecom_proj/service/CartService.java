@@ -4,6 +4,7 @@ import com.cart.ecom_proj.dto.AddCartItemRequest;
 import com.cart.ecom_proj.dto.CartDto;
 import com.cart.ecom_proj.dto.CartItemDto;
 import com.cart.ecom_proj.dto.UpdateCartItemRequest;
+import com.cart.ecom_proj.model.AppUser;
 import com.cart.ecom_proj.model.Cart;
 import com.cart.ecom_proj.model.CartItem;
 import com.cart.ecom_proj.model.Product;
@@ -30,19 +31,19 @@ public class CartService {
         this.productRepo = productRepo;
     }
 
-    public CartDto getCart(String cartKey) {
-        Cart cart = getOrCreateCart(cartKey);
+    public CartDto getCart(String cartKey, AppUser user) {
+        Cart cart = getOrCreateCart(cartKey, user);
         return toDto(cart);
     }
 
-    public CartDto addItem(String cartKey, AddCartItemRequest request) {
+    public CartDto addItem(String cartKey, AddCartItemRequest request, AppUser user) {
         validateCartKey(cartKey);
         if (request == null || request.productId() <= 0) {
             throw new IllegalArgumentException("Valid productId is required.");
         }
         int quantity = request.quantity() <= 0 ? 1 : request.quantity();
 
-        Cart cart = getOrCreateCart(cartKey);
+        Cart cart = getOrCreateCart(cartKey, user);
         Product product = productRepo.findById(request.productId())
                 .orElseThrow(() -> new IllegalArgumentException("Product not found."));
 
@@ -69,13 +70,13 @@ public class CartService {
         return toDto(cartRepo.save(cart));
     }
 
-    public CartDto updateItem(String cartKey, int productId, UpdateCartItemRequest request) {
+    public CartDto updateItem(String cartKey, int productId, UpdateCartItemRequest request, AppUser user) {
         validateCartKey(cartKey);
         if (request == null || request.quantity() <= 0) {
             throw new IllegalArgumentException("Quantity must be at least 1.");
         }
 
-        Cart cart = getOrCreateCart(cartKey);
+        Cart cart = getOrCreateCart(cartKey, user);
         CartItem existing = findItem(cart, productId);
         if (existing == null) {
             throw new IllegalArgumentException("Cart item not found.");
@@ -93,9 +94,9 @@ public class CartService {
         return toDto(cartRepo.save(cart));
     }
 
-    public CartDto removeItem(String cartKey, int productId) {
+    public CartDto removeItem(String cartKey, int productId, AppUser user) {
         validateCartKey(cartKey);
-        Cart cart = getOrCreateCart(cartKey);
+        Cart cart = getOrCreateCart(cartKey, user);
         CartItem existing = findItem(cart, productId);
         if (existing == null) {
             throw new IllegalArgumentException("Cart item not found.");
@@ -105,20 +106,36 @@ public class CartService {
         return toDto(cartRepo.save(cart));
     }
 
-    public void clearCart(String cartKey) {
+    public void clearCart(String cartKey, AppUser user) {
         validateCartKey(cartKey);
-        Cart cart = getOrCreateCart(cartKey);
+        Cart cart = getOrCreateCart(cartKey, user);
         cart.getItems().clear();
         cartRepo.save(cart);
     }
 
-    private Cart getOrCreateCart(String cartKey) {
+    private Cart getOrCreateCart(String cartKey, AppUser user) {
         validateCartKey(cartKey);
-        return cartRepo.findByCartKey(cartKey).orElseGet(() -> {
-            Cart cart = new Cart();
-            cart.setCartKey(cartKey);
-            return cartRepo.save(cart);
-        });
+        if (user == null || user.getEmail() == null || user.getEmail().isBlank()) {
+            throw new IllegalArgumentException("Authenticated user is required.");
+        }
+
+        return cartRepo.findByUserEmailIgnoreCase(user.getEmail())
+                .orElseGet(() -> createCartForUser(cartKey, user));
+    }
+
+    private Cart createCartForUser(String cartKey, AppUser user) {
+        Cart cart = new Cart();
+        cart.setUser(user);
+        cart.setCartKey(resolveCartKey(cartKey, user));
+        return cartRepo.save(cart);
+    }
+
+    private String resolveCartKey(String requestedCartKey, AppUser user) {
+        String normalizedKey = requestedCartKey.trim();
+        if (!cartRepo.existsByCartKey(normalizedKey)) {
+            return normalizedKey;
+        }
+        return "cart-user-" + user.getId();
     }
 
     private void validateCartKey(String cartKey) {
@@ -157,7 +174,8 @@ public class CartService {
                     unitPrice,
                     lineTotal,
                     product.isProductAvailable(),
-                    product.getStockQuantity()
+                    product.getStockQuantity(),
+                    product.getImageUrl()
             ));
         }
 

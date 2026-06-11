@@ -25,9 +25,7 @@ public class ProductService {
     }
 
     public Product addProduct(Product product, MultipartFile imageFile) throws IOException {
-        product.setImageName(imageFile.getOriginalFilename());
-        product.setImageType(imageFile.getContentType());
-        product.setImageDate(imageFile.getBytes());
+        applyImageData(product, imageFile, null);
         return repo.save(product);
     }
 
@@ -38,15 +36,7 @@ public class ProductService {
         }
 
         product.setId(id);
-        if (imageFile != null && !imageFile.isEmpty()) {
-            product.setImageDate(imageFile.getBytes());
-            product.setImageName(imageFile.getOriginalFilename());
-            product.setImageType(imageFile.getContentType());
-        } else {
-            product.setImageDate(existing.getImageDate());
-            product.setImageName(existing.getImageName());
-            product.setImageType(existing.getImageType());
-        }
+        applyImageData(product, imageFile, existing);
         return repo.save(product);
     }
 
@@ -66,5 +56,30 @@ public class ProductService {
 
     public List<Product> searchProducts(String keyword) {
         return repo.searchProducts(keyword);
+    }
+
+    private void applyImageData(Product product, MultipartFile imageFile, Product existing) throws IOException {
+        if (imageFile != null && !imageFile.isEmpty()) {
+            product.setImageDate(imageFile.getBytes());
+            product.setImageName(imageFile.getOriginalFilename());
+            product.setImageType(imageFile.getContentType());
+            product.setImageUrl(null);
+            return;
+        }
+
+        if (product.getImageUrl() != null && !product.getImageUrl().isBlank()) {
+            product.setImageUrl(product.getImageUrl().trim());
+            product.setImageDate(null);
+            product.setImageName(null);
+            product.setImageType(null);
+            return;
+        }
+
+        if (existing != null) {
+            product.setImageUrl(existing.getImageUrl());
+            product.setImageDate(existing.getImageDate());
+            product.setImageName(existing.getImageName());
+            product.setImageType(existing.getImageType());
+        }
     }
 }

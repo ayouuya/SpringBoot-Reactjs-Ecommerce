@@ -18,11 +18,14 @@ public class Payment {
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "payment_method")
     private PaymentMethod method;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "payment_status")
     private PaymentStatus status;
 
+    @Column(name = "payment_reference")
     private String reference;
 
     private BigDecimal amount;

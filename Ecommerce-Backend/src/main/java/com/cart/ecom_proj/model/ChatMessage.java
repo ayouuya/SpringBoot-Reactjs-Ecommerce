@@ -26,5 +26,6 @@ public class ChatMessage {
     @Column(columnDefinition = "TEXT")
     private String content;
 
+    @Column(name = "message_timestamp")
     private LocalDateTime timestamp;
 }

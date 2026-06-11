@@ -4,12 +4,13 @@ import AppContext from "../Context/Context";
 import API from "../axios";
 import { formatCurrency } from "../utils/formatCurrency";
 import AuthContext from "../Context/AuthContext";
+import unplugged from "../assets/unplugged.png";
+
 const Product = () => {
   const { id } = useParams();
   const { addToCart, removeFromCart, refreshData } = useContext(AppContext);
   const { isAdmin, isUser } = useContext(AuthContext);
   const [product, setProduct] = useState(null);
-  const [imageUrl, setImageUrl] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,19 +18,9 @@ const Product = () => {
       try {
         const response = await API.get(`/product/${id}`);
         setProduct(response.data);
-        if (response.data.imageName) {
-          fetchImage();
-        }
       } catch (error) {
         console.error("Error fetching product:", error);
       }
-    };
-
-    const fetchImage = async () => {
-      const response = await API.get(`/product/${id}/image`, {
-        responseType: "blob",
-      });
-      setImageUrl(URL.createObjectURL(response.data));
     };
 
     fetchProduct();
@@ -72,8 +63,12 @@ const Product = () => {
       <div className="containers" style={{ display: "flex" }}>
         <img
           className="left-column-img"
-          src={imageUrl}
+          src={product.imageUrl || `http://localhost:8080/api/product/${product.id}/image`}
           alt={product.imageName}
+          onError={(event) => {
+            event.currentTarget.onerror = null;
+            event.currentTarget.src = unplugged;
+          }}
           style={{ width: "50%", height: "auto" }}
         />
 
@@ -83,11 +78,9 @@ const Product = () => {
             <span style={{ fontSize: "1.2rem", fontWeight: 'lighter' }}>
               {product.category}
             </span>
-            <p className="release-date" style={{ marginBottom: "2rem" }}>
-              
+            <div className="release-date" style={{ marginBottom: "2rem" }}>
               <h6>Listed : <span> <i> {new Date(product.releaseDate).toLocaleDateString()}</i></span></h6>
-              {/* <i> {new Date(product.releaseDate).toLocaleDateString()}</i> */}
-            </p>
+            </div>
             </div>
             
            

@@ -19,7 +19,10 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+
+    @Column(length = 2000)
     private String description;
+
     private String brand;
     private BigDecimal price;
     private  String category;
@@ -39,6 +42,9 @@ public class Product {
 
     @Column(name = "image_type")
     private String imageType;
+
+    @Column(name = "image_url", length = 1024)
+    private String imageUrl;
 
     @Lob
     @Column(name = "image_data")
@@ -134,6 +140,14 @@ public class Product {
 
     public void setImageType(String imageType) {
         this.imageType = imageType;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public byte[] getImageDate() {

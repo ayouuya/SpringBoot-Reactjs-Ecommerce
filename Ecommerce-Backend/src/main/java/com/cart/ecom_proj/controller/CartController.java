@@ -3,42 +3,33 @@ package com.cart.ecom_proj.controller;
 import com.cart.ecom_proj.dto.AddCartItemRequest;
 import com.cart.ecom_proj.dto.CartDto;
 import com.cart.ecom_proj.dto.UpdateCartItemRequest;
-import com.cart.ecom_proj.model.UserRole;
+import com.cart.ecom_proj.model.AppUser;
 import com.cart.ecom_proj.service.CartService;
-import com.cart.ecom_proj.service.UserAccessService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
 @RequestMapping("/api/cart")
+@PreAuthorize("hasAnyRole('USER','ADMIN')")
 public class CartController {
 
     private final CartService cartService;
-    private final UserAccessService userAccessService;
 
-    public CartController(CartService cartService, UserAccessService userAccessService) {
+    public CartController(CartService cartService) {
         this.cartService = cartService;
-        this.userAccessService = userAccessService;
     }
 
     @GetMapping("/{cartKey}")
     public ResponseEntity<?> getCart(
             @PathVariable String cartKey,
-            @RequestHeader(value = "X-USER-EMAIL", required = false) String email,
-            @RequestHeader(value = "X-USER-ROLE", required = false) String role
+            @AuthenticationPrincipal AppUser currentUser
     ) {
         try {
-            userAccessService.requireUser(email, role, UserRole.USER);
-        } catch (SecurityException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
-        } catch (IllegalArgumentException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
-        }
-
-        try {
-            return new ResponseEntity<>(cartService.getCart(cartKey), HttpStatus.OK);
+            return new ResponseEntity<>(cartService.getCart(cartKey, currentUser), HttpStatus.OK);
         } catch (IllegalArgumentException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -48,19 +39,10 @@ public class CartController {
     public ResponseEntity<?> addItem(
             @PathVariable String cartKey,
             @RequestBody AddCartItemRequest request,
-            @RequestHeader(value = "X-USER-EMAIL", required = false) String email,
-            @RequestHeader(value = "X-USER-ROLE", required = false) String role
+            @AuthenticationPrincipal AppUser currentUser
     ) {
         try {
-            userAccessService.requireUser(email, role, UserRole.USER);
-        } catch (SecurityException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
-        } catch (IllegalArgumentException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
-        }
-
-        try {
-            return new ResponseEntity<>(cartService.addItem(cartKey, request), HttpStatus.OK);
+            return new ResponseEntity<>(cartService.addItem(cartKey, request, currentUser), HttpStatus.OK);
         } catch (IllegalArgumentException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -71,19 +53,10 @@ public class CartController {
             @PathVariable String cartKey,
             @PathVariable int productId,
             @RequestBody UpdateCartItemRequest request,
-            @RequestHeader(value = "X-USER-EMAIL", required = false) String email,
-            @RequestHeader(value = "X-USER-ROLE", required = false) String role
+            @AuthenticationPrincipal AppUser currentUser
     ) {
         try {
-            userAccessService.requireUser(email, role, UserRole.USER);
-        } catch (SecurityException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
-        } catch (IllegalArgumentException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
-        }
-
-        try {
-            return new ResponseEntity<>(cartService.updateItem(cartKey, productId, request), HttpStatus.OK);
+            return new ResponseEntity<>(cartService.updateItem(cartKey, productId, request, currentUser), HttpStatus.OK);
         } catch (IllegalArgumentException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -93,19 +66,10 @@ public class CartController {
     public ResponseEntity<?> removeItem(
             @PathVariable String cartKey,
             @PathVariable int productId,
-            @RequestHeader(value = "X-USER-EMAIL", required = false) String email,
-            @RequestHeader(value = "X-USER-ROLE", required = false) String role
+            @AuthenticationPrincipal AppUser currentUser
     ) {
         try {
-            userAccessService.requireUser(email, role, UserRole.USER);
-        } catch (SecurityException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
-        } catch (IllegalArgumentException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
-        }
-
-        try {
-            return new ResponseEntity<>(cartService.removeItem(cartKey, productId), HttpStatus.OK);
+            return new ResponseEntity<>(cartService.removeItem(cartKey, productId, currentUser), HttpStatus.OK);
         } catch (IllegalArgumentException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -114,19 +78,10 @@ public class CartController {
     @DeleteMapping("/{cartKey}")
     public ResponseEntity<?> clearCart(
             @PathVariable String cartKey,
-            @RequestHeader(value = "X-USER-EMAIL", required = false) String email,
-            @RequestHeader(value = "X-USER-ROLE", required = false) String role
+            @AuthenticationPrincipal AppUser currentUser
     ) {
         try {
-            userAccessService.requireUser(email, role, UserRole.USER);
-        } catch (SecurityException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
-        } catch (IllegalArgumentException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
-        }
-
-        try {
-            cartService.clearCart(cartKey);
+            cartService.clearCart(cartKey, currentUser);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (IllegalArgumentException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);

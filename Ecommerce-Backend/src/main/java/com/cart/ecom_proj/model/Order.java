@@ -23,6 +23,7 @@ public class Order {
     private String orderNumber;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "order_status")
     private OrderStatus status;
 
     private BigDecimal subtotal;

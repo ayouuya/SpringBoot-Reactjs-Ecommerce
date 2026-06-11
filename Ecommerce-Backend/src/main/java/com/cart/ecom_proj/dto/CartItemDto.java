@@ -11,6 +11,7 @@ public record CartItemDto(
         BigDecimal unitPrice,
         BigDecimal lineTotal,
         boolean productAvailable,
-        int stockQuantity
+        int stockQuantity,
+        String imageUrl
 ) {
 }

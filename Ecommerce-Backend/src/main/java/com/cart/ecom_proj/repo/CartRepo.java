@@ -7,4 +7,8 @@ import java.util.Optional;
 
 public interface CartRepo extends JpaRepository<Cart, Long> {
     Optional<Cart> findByCartKey(String cartKey);
+
+    Optional<Cart> findByUserEmailIgnoreCase(String email);
+
+    boolean existsByCartKey(String cartKey);
 }

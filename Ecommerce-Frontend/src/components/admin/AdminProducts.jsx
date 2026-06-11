@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import API from "../../axios";
+import API, { getApiErrorMessage } from "../../axios";
 import AppContext from "../../Context/Context";
 import { formatCurrency } from "../../utils/formatCurrency";
 
@@ -19,8 +19,10 @@ const AdminProducts = () => {
       setStatus({ type: "success", message: "Product deleted." });
       refreshData();
     } catch (error) {
-      const message = error?.response?.data || error.message;
-      setStatus({ type: "error", message: message || "Unable to delete product." });
+      setStatus({
+        type: "error",
+        message: getApiErrorMessage(error, "Unable to delete product."),
+      });
     }
   };
 
@@ -40,8 +42,10 @@ const AdminProducts = () => {
       setStatus({ type: "success", message: "Stock updated." });
       refreshData();
     } catch (error) {
-      const message = error?.response?.data || error.message;
-      setStatus({ type: "error", message: message || "Unable to update stock." });
+      setStatus({
+        type: "error",
+        message: getApiErrorMessage(error, "Unable to update stock."),
+      });
     }
   };
 

@@ -37,8 +37,11 @@ public class CheckoutService {
         if (request.paymentMethod() == null) {
             return new CheckoutResponse(false, "Payment method is required.", null, null, OrderStatus.FAILED, PaymentStatus.DECLINED, CURRENCY);
         }
+        if (user == null || user.getEmail() == null || user.getEmail().isBlank()) {
+            return new CheckoutResponse(false, "Authenticated user is required.", null, null, OrderStatus.FAILED, PaymentStatus.DECLINED, CURRENCY);
+        }
 
-        Cart cart = cartRepo.findByCartKey(request.cartKey())
+        Cart cart = cartRepo.findByUserEmailIgnoreCase(user.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Cart not found."));
 
         if (cart.getItems().isEmpty()) {
@@ -50,7 +53,7 @@ public class CheckoutService {
             return new CheckoutResponse(false, "Customer name, email, and address are required.", null, null, OrderStatus.FAILED, PaymentStatus.DECLINED, CURRENCY);
         }
 
-        if (user == null || !customer.email().equalsIgnoreCase(user.getEmail())) {
+        if (!customer.email().equalsIgnoreCase(user.getEmail())) {
             return new CheckoutResponse(false, "Customer email does not match logged-in user.", null, null, OrderStatus.FAILED, PaymentStatus.DECLINED, CURRENCY);
         }
 
